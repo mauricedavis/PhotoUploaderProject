@@ -1,0 +1,19 @@
+<template>
+    <div class="photo-uploader">
+        <template if:true={photoUrl}>
+            <img src={photoUrl} class="photo-preview" alt="Uploaded Photo"/>
+            <div class="status-text">Picture uploaded</div>
+            <lightning-button label="Delete Photo" icon-name="utility:delete" onclick={handleDelete}></lightning-button>
+        </template>
+        <template if:false={photoUrl}>
+            <lightning-file-upload
+                label="Upload Photo"
+                name="fileUploader"
+                accept={acceptedFormats}
+                record-id={recordId}
+                onuploadfinished={handleUploadFinished}
+                multiple={false}>
+            </lightning-file-upload>
+        </template>
+    </div>
+</template>
