@@ -4,10 +4,6 @@
             <div class="slds-align_absolute-center slds-p-around_medium">
                 <img src={fileUrl} class="uploaded-img" alt="Uploaded Image" style="max-height:200px; border-radius:8px;" />
             </div>
-            <p class="slds-align_absolute-center slds-text-body_regular">Picture uploaded</p>
-            <div class="slds-align_absolute-center slds-m-top_small">
-                <lightning-button label="Delete Photo" icon-name="utility:delete" onclick={handleDelete}></lightning-button>
-            </div>
         </template>
 
         <template if:false={fileUrl}>

@@ -1,42 +1,24 @@
-import { LightningElement, api } from 'lwc';
-import getLatestPhoto from '@salesforce/apex/FileUploaderController.getLatestPhoto';
-import deleteLatestPhoto from '@salesforce/apex/FileUploaderController.deleteLatestPhoto';
+import { LightningElement, api, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class FileUploader extends LightningElement {
     @api recordId;
-    photoUrl;
+    @track fileUrl;
+    allowMultiple = false;
 
-    acceptedFormats = ['.jpg', '.jpeg', '.png'];
-
-    connectedCallback() {
-        this.loadPhoto();
-    }
-
-    loadPhoto() {
-        getLatestPhoto({ recordId: this.recordId })
-            .then(result => {
-                if (result) {
-                    this.photoUrl = /sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=;
-                } else {
-                    this.photoUrl = null;
-                }
-            })
-            .catch(error => {
-                console.error('Error loading photo', error);
-            });
+    get acceptedFormats() {
+        return ['.jpg', '.jpeg', '.png'];
     }
 
     handleUploadFinished(event) {
-        this.loadPhoto();
-    }
+        const file = event.detail.files[0];
+        const versionId = file.contentVersionId;
+        this.fileUrl = '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=' + versionId;
 
-    handleDelete() {
-        deleteLatestPhoto({ recordId: this.recordId })
-            .then(() => {
-                this.photoUrl = null;
-            })
-            .catch(error => {
-                console.error('Delete failed', error);
-            });
+        this.dispatchEvent(new ShowToastEvent({
+            title: 'Success',
+            message: 'Picture uploaded.',
+            variant: 'success'
+        }));
     }
 }
