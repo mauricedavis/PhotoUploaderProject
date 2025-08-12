@@ -30,3 +30,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### deploy/2025-08-12--0504PM
 - ?? Enlarged uploaded image to 400px height, responsive width
 
+
+### deploy/2025-08-12--0507PM
+- ??? Enlarged image to full width inside the card container
+
