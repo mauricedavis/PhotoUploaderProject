@@ -1,20 +1,22 @@
 <template>
-    <div class="slds-box slds-theme_default">
-        <template if:true={photoUrl}>
-            <img src={photoUrl} alt="Uploaded Image" style="max-width: 100%; border-radius: 0.5rem;" />
-            <p class="slds-m-top_small slds-text-align_center">Picture uploaded</p>
-            <div class="slds-text-align_center slds-m-top_small">
-                <lightning-button label="Delete Photo" icon-name="utility:delete" onclick={handleDelete}></lightning-button>
+    <lightning-card title="Photo Uploader" icon-name="utility:upload">
+        <template if:true={fileUrl}>
+            <div class="slds-align_absolute-center slds-p-around_medium">
+                <img src={fileUrl} class="uploaded-img" alt="Uploaded Image" style="max-height:200px; border-radius:8px;" />
             </div>
         </template>
-        <template if:false={photoUrl}>
-            <lightning-file-upload
-                label="Upload Photo"
-                name="fileUploader"
-                accept={acceptedFormats}
-                record-id={recordId}
-                onuploadfinished={handleUploadFinished}>
-            </lightning-file-upload>
+
+        <template if:false={fileUrl}>
+            <div class="slds-p-around_medium">
+                <lightning-file-upload
+                    label="Upload Photo"
+                    name="fileUploader"
+                    accept={acceptedFormats}
+                    record-id={recordId}
+                    onuploadfinished={handleUploadFinished}
+                    multiple={allowMultiple}
+                ></lightning-file-upload>
+            </div>
         </template>
-    </div>
+    </lightning-card>
 </template>
