@@ -20,3 +20,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### deploy/2025-08-12--0434PM
 - Removed Delete Photo button and related logic.
 
+
+### deploy/2025-08-12--0443PM
+- Removed 'Picture uploaded' text below uploaded image.
+

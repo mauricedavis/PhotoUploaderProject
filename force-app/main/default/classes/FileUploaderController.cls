@@ -1,3 +1,3 @@
 public with sharing class FileUploaderController {
-    // Apex controller left intentionally minimal
+    // No server logic required
 }
