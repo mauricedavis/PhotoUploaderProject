@@ -26,3 +26,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - ? Removed 'Picture uploaded' text
 - ??? Fixed duplicate folder creation logic
 
+
+### deploy/2025-08-12--0504PM
+- ?? Enlarged uploaded image to 400px height, responsive width
+
