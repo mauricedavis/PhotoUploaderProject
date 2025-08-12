@@ -1,3 +1,8 @@
+## Changelog
+### 2025-08-12 03:37PM
+- Removed email notification
+- Removed automatic browser launch
+
 # Salesforce DX Project: Next Steps
 
 Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
