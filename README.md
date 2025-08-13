@@ -38,3 +38,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### deploy/2025-08-13--0824AM
 - ?? Image now persists after page reload by retrieving latest ContentDocumentLink
 
+
+### deploy/2025-08-13--0830AM
+- ?? Image now persists across page reloads.
+
