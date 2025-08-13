@@ -1,26 +1,26 @@
 import { LightningElement, api, track } from 'lwc';
-import getImageUrl from '@salesforce/apex/FileUploaderController.getImageUrl';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import fetchDocumentInfo from '@salesforce/apex/FileUploaderController.fetchDocumentInfo';
 
 export default class FileUploader extends LightningElement {
     @api recordId;
     @track fileUrl;
+    @track contentDocumentId;
     allowMultiple = false;
-
-    get acceptedFormats() {
-        return ['.jpg', '.jpeg', '.png'];
-    }
 
     connectedCallback() {
         if (this.recordId) {
-            getImageUrl({ recordId: this.recordId })
-                .then(url => {
-                    this.fileUrl = url;
-                })
-                .catch(error => {
-                    console.error('Error fetching image URL', error);
+            fetchDocumentInfo({ recordId: this.recordId })
+                .then(result => {
+                    if (result) {
+                        this.fileUrl = result;
+                    }
                 });
         }
+    }
+
+    get acceptedFormats() {
+        return ['.jpg', '.jpeg', '.png'];
     }
 
     handleUploadFinished(event) {
@@ -31,7 +31,7 @@ export default class FileUploader extends LightningElement {
         this.dispatchEvent(new ShowToastEvent({
             title: 'Success',
             message: 'Picture uploaded.',
-            variant: 'success',
+            variant: 'success'
         }));
     }
 }

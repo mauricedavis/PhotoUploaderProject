@@ -1,0 +1,110 @@
+﻿{
+  "status": 0,
+  "result": {
+    "checkOnly": false,
+    "completedDate": "2025-08-13T13:10:43.000Z",
+    "createdBy": "005Hu00000QFn1I",
+    "createdByName": "Attain Partners",
+    "createdDate": "2025-08-13T13:10:41.000Z",
+    "details": {
+      "componentSuccesses": [
+        {
+          "changed": true,
+          "componentType": "ApexClass",
+          "created": false,
+          "createdDate": "2025-08-13T13:10:41.000Z",
+          "deleted": false,
+          "fileName": "classes/FileUploaderController.cls",
+          "fullName": "FileUploaderController",
+          "id": "01pOu000001hPVdIAM",
+          "success": true
+        },
+        {
+          "changed": true,
+          "componentType": "LightningComponentBundle",
+          "created": false,
+          "createdDate": "2025-08-13T13:10:43.000Z",
+          "deleted": false,
+          "fileName": "lwc/fileUploader",
+          "fullName": "fileUploader",
+          "id": "0RbOu000000DojlKAC",
+          "success": true
+        },
+        {
+          "changed": true,
+          "componentType": "",
+          "created": false,
+          "createdDate": "2025-08-13T13:10:43.000Z",
+          "deleted": false,
+          "fileName": "package.xml",
+          "fullName": "package.xml",
+          "success": true
+        }
+      ],
+      "runTestResult": {
+        "numFailures": 0,
+        "numTestsRun": 0,
+        "totalTime": 0,
+        "codeCoverage": [],
+        "codeCoverageWarnings": [],
+        "failures": [],
+        "flowCoverage": [],
+        "flowCoverageWarnings": [],
+        "successes": []
+      },
+      "componentFailures": []
+    },
+    "done": true,
+    "id": "0AfOu00000B6AeHKAV",
+    "ignoreWarnings": true,
+    "lastModifiedDate": "2025-08-13T13:10:43.000Z",
+    "numberComponentErrors": 0,
+    "numberComponentsDeployed": 2,
+    "numberComponentsTotal": 2,
+    "numberFiles": "9",
+    "numberTestErrors": 0,
+    "numberTestsCompleted": 0,
+    "numberTestsTotal": 0,
+    "rollbackOnError": true,
+    "runTestsEnabled": false,
+    "startDate": "2025-08-13T13:10:41.000Z",
+    "status": "Succeeded",
+    "success": true,
+    "zipSize": 2882,
+    "files": [
+      {
+        "fullName": "FileUploaderController",
+        "type": "ApexClass",
+        "state": "Changed",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\classes\\FileUploaderController.cls"
+      },
+      {
+        "fullName": "FileUploaderController",
+        "type": "ApexClass",
+        "state": "Changed",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\classes\\FileUploaderController.cls-meta.xml"
+      },
+      {
+        "fullName": "fileUploader",
+        "type": "LightningComponentBundle",
+        "state": "Changed",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\lwc\\fileUploader\\fileUploader.html"
+      },
+      {
+        "fullName": "fileUploader",
+        "type": "LightningComponentBundle",
+        "state": "Changed",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\lwc\\fileUploader\\fileUploader.js"
+      },
+      {
+        "fullName": "fileUploader",
+        "type": "LightningComponentBundle",
+        "state": "Changed",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\lwc\\fileUploader\\fileUploader.js-meta.xml"
+      }
+    ],
+    "zipFileCount": 6,
+    "deployUrl": "https://collegetrack2--attain.sandbox.my.salesforce.com/lightning/setup/DeployStatus/page?address=%2Fchangemgmt%2FmonitorDeploymentsDetails.apexp%3FasyncId%3D0AfOu00000B6AeHKAV%26retURL%3D%252Fchangemgmt%252FmonitorDeployment.apexp"
+  },
+  "warnings": []
+}
