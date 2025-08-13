@@ -57,3 +57,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Max-height adjustment for image
 - Log encoding fix (UTF-8)
 
+
+### deploy/2025-08-13--1002AM
+- Fix image persistence after page refresh
+
