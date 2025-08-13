@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getImageUrl from '@salesforce/apex/FileUploaderController.getImageUrl';
 
 export default class FileUploader extends LightningElement {
     @api recordId;
@@ -8,6 +9,18 @@ export default class FileUploader extends LightningElement {
 
     get acceptedFormats() {
         return ['.jpg', '.jpeg', '.png'];
+    }
+
+    connectedCallback() {
+        if (this.recordId) {
+            getImageUrl({ recordId: this.recordId })
+                .then(url => {
+                    this.fileUrl = url;
+                })
+                .catch(error => {
+                    console.error('Error retrieving image:', error);
+                });
+        }
     }
 
     handleUploadFinished(event) {

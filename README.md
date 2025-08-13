@@ -34,3 +34,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### deploy/2025-08-12--0507PM
 - ??? Enlarged image to full width inside the card container
 
+
+### deploy/2025-08-13--0824AM
+- ?? Image now persists after page reload by retrieving latest ContentDocumentLink
+
