@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Currently_Displayed__c</fullName>
+    <label>Is Currently Displayed</label>
+    <type>Checkbox</type>
+    <defaultValue>false</defaultValue>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <required>false</required>
+</CustomField>

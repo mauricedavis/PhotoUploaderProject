@@ -5,7 +5,6 @@
                 <img src={fileUrl} class="uploaded-img" alt="Uploaded Image" style="max-height:400px; border-radius:8px;" />
             </div>
         </template>
-
         <template if:false={fileUrl}>
             <div class="slds-p-around_medium">
                 <lightning-file-upload
@@ -14,8 +13,8 @@
                     accept={acceptedFormats}
                     record-id={recordId}
                     onuploadfinished={handleUploadFinished}
-                    multiple={allowMultiple}
-                ></lightning-file-upload>
+                    multiple={false}>
+                </lightning-file-upload>
             </div>
         </template>
     </lightning-card>
