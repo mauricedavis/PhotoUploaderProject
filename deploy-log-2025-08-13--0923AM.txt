@@ -1,0 +1,1029 @@
+﻿
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+ ΓûáPreparing
+ ΓûáWaiting for the org to respond
+ ΓûáDeploying Metadata
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: -
+ Elapsed Time: 0ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ - Preparing 9ms
+ ΓûáWaiting for the org to respond
+ ΓûáDeploying Metadata
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: -
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 41ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ - Preparing 38ms
+ ΓûáWaiting for the org to respond
+ ΓûáDeploying Metadata
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: -
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 84ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ - Preparing 83ms
+ ΓûáWaiting for the org to respond
+ ΓûáDeploying Metadata
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: -
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 130ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ - Preparing 129ms
+ ΓûáWaiting for the org to respond
+ ΓûáDeploying Metadata
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: \
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 162ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ \ Preparing 159ms
+ ΓûáWaiting for the org to respond
+ ΓûáDeploying Metadata
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: \
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 194ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 13ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 237ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 59ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 269ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 91ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 301ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 122ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 346ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 167ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 393ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 201ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 424ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 234ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 456ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 273ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 481ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 311ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 536ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 358ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 568ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 390ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 600ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 420ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 632ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 453ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 660ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 486ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 697ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 518ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 727ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 539ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 748ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 598ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 809ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 629ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 841ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 662ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 874ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 695ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 905ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 726ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 937ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 759ms
+   Γû╕ Components: 1/2 (50%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 969ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 784ms
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 993ms
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 839ms
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.04s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 871ms
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.08s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 903ms
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.11s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 934ms
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.14s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 967ms
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.17s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 999ms
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.21s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 1.03s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.24s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 1.06s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.27s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 1.09s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.30s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 1.12s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.34s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 1.16s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.37s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 1.19s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.41s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 1.22s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.44s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ - Deploying Metadata 1.25s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.47s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 1.29s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.50s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 1.33s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.53s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 1.36s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.57s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ \ Deploying Metadata 1.39s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.61s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 1.42s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.64s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 1.45s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.67s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 1.50s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.71s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ | Deploying Metadata 1.53s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: In Progress
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.74s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ / Deploying Metadata 1.55s
+   Γû╕ Components: 2/2 (100%)
+ ΓûáRunning Tests
+ ΓûáUpdating Source Tracking
+ ΓûáDone
+
+ Status: Succeeded
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.76s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ ΓêÜDeploying Metadata 1.55s
+   Γû╕ Components: 2/2 (100%)
+ ( ) Running Tests - Skipped
+ ( ) Updating Source Tracking - Skipped
+ - Done 0ms
+
+ Status: Succeeded
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.76s
+
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G
+ ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Deploying Metadata ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ Deploying v62.0 metadata to collegetrack1@attainpartners.com.attain using the
+ v64.0 SOAP API.
+
+ ΓêÜPreparing 185ms
+ ( ) Waiting for the org to respond - Skipped
+ ΓêÜDeploying Metadata 1.64s
+   Γû╕ Components: 2/2 (100%)
+ ( ) Running Tests - Skipped
+ ( ) Updating Source Tracking - Skipped
+ ΓêÜDone 0ms
+
+ Status: Succeeded
+ Deploy ID: 0AfOu00000B6BDlKAN
+ Target Org: collegetrack1@attainpartners.com.attain
+ Elapsed Time: 1.76s
+
+
+Deployed Source
+ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
+Γöé State   Γöé Name                   Γöé Type                     Γöé Path                                                               Γöé
+Γö£ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö╝ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö╝ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö╝ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöñ
+Γöé Changed Γöé FileUploaderController Γöé ApexClass                Γöé force-app\main\default\classes\FileUploaderController.cls          Γöé
+Γöé Changed Γöé FileUploaderController Γöé ApexClass                Γöé force-app\main\default\classes\FileUploaderController.cls-meta.xml Γöé
+Γöé Changed Γöé fileUploader           Γöé LightningComponentBundle Γöé force-app\main\default\lwc\fileUploader\fileUploader.html          Γöé
+Γöé Changed Γöé fileUploader           Γöé LightningComponentBundle Γöé force-app\main\default\lwc\fileUploader\fileUploader.js            Γöé
+Γöé Changed Γöé fileUploader           Γöé LightningComponentBundle Γöé force-app\main\default\lwc\fileUploader\fileUploader.js-meta.xml   Γöé
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö┤ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö┤ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö┤ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
+
+

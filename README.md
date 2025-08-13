@@ -51,3 +51,9 @@ The `sfdx-project.json` file contains useful configuration information for your 
 
 ### deploy/2025-08-13--0918AM
 - ?? Added debug logging for persistent image rendering
+
+### ?? 2025-08-13--0923AM - Deployment changes:
+- Fixed image persistence on refresh
+- Max-height adjustment for image
+- Log encoding fix (UTF-8)
+

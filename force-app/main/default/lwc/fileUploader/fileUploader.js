@@ -1,10 +1,11 @@
 import { LightningElement, api, track } from 'lwc';
-import fetchLatestImage from '@salesforce/apex/FileUploaderController.fetchLatestImage';
+import getLatestImageVersionId from '@salesforce/apex/FileUploaderController.getLatestImageVersionId';
 
 export default class FileUploader extends LightningElement {
     @api recordId;
     @track fileUrl;
-    @track allowMultiple = false;
+    @track contentDocumentId;
+    allowMultiple = false;
 
     get acceptedFormats() {
         return ['.jpg', '.jpeg', '.png'];
@@ -12,14 +13,14 @@ export default class FileUploader extends LightningElement {
 
     connectedCallback() {
         if (this.recordId) {
-            fetchLatestImage({ recordId: this.recordId })
-                .then((result) => {
-                    if (result) {
-                        this.fileUrl = '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=' + result;
+            getLatestImageVersionId({ recordId: this.recordId })
+                .then(versionId => {
+                    if (versionId) {
+                        this.fileUrl = '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=' + versionId;
                     }
                 })
-                .catch((error) => {
-                    console.error('Error fetching image', error);
+                .catch(error => {
+                    console.error('Error fetching image version:', error);
                 });
         }
     }
