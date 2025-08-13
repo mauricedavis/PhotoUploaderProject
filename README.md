@@ -61,3 +61,8 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### deploy/2025-08-13--1002AM
 - Fix image persistence after page refresh
 
+
+### 2025-08-13--0122PM
+- Added support for 'Is Currently Displayed' field on ContentVersion
+- Enabled drag-and-drop image replacement with persistence
+
