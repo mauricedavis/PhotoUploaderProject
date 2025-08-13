@@ -1,5 +1,4 @@
 public with sharing class FileUploaderController {
-
     @AuraEnabled(cacheable=true)
     public static ContentVersion getCurrentPhoto(Id recordId) {
         List<ContentDocumentLink> links = [
@@ -10,36 +9,37 @@ public with sharing class FileUploaderController {
         if (links.isEmpty()) return null;
 
         List<ContentVersion> versions = [
-            SELECT Id, Title, Description, ContentDocumentId 
+            SELECT Id, ContentDocumentId 
             FROM ContentVersion 
             WHERE Is_Currently_Displayed__c = TRUE 
-              AND ContentDocumentId = :links[0].ContentDocumentId
+              AND ContentDocumentId IN :new Set<Id>(links.stream().map(l -> l.ContentDocumentId).toList())
             LIMIT 1
         ];
-
         return versions.isEmpty() ? null : versions[0];
     }
 
     @AuraEnabled
-    public static void updatePhotoStatus(Id recordId, Id contentVersionId, Id documentId) {
-        List<ContentVersion> existing = [
-            SELECT Id, Is_Currently_Displayed__c 
-            FROM ContentVersion 
-            WHERE ContentDocumentId IN (
-                SELECT ContentDocumentId 
-                FROM ContentDocumentLink 
-                WHERE LinkedEntityId = :recordId
-            )
+    public static void setCurrentPhoto(Id recordId, Id documentId) {
+        List<ContentDocumentLink> links = [
+            SELECT ContentDocumentId 
+            FROM ContentDocumentLink 
+            WHERE LinkedEntityId = :recordId
         ];
+        if (links.isEmpty()) return;
 
-        for (ContentVersion cv : existing) {
-            cv.Is_Currently_Displayed__c = false;
+        Set<Id> documentIds = new Set<Id>();
+        for (ContentDocumentLink link : links) {
+            documentIds.add(link.ContentDocumentId);
         }
 
-        ContentVersion target = [SELECT Id, Is_Currently_Displayed__c FROM ContentVersion WHERE Id = :contentVersionId LIMIT 1];
-        target.Is_Currently_Displayed__c = true;
-
-        update existing;
-        update target;
+        List<ContentVersion> toUpdate = [
+            SELECT Id, Is_Currently_Displayed__c 
+            FROM ContentVersion 
+            WHERE ContentDocumentId IN :documentIds
+        ];
+        for (ContentVersion cv : toUpdate) {
+            cv.Is_Currently_Displayed__c = (cv.ContentDocumentId == documentId);
+        }
+        update toUpdate;
     }
 }

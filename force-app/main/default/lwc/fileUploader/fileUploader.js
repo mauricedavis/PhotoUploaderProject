@@ -1,22 +1,14 @@
 import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCurrentPhoto from '@salesforce/apex/FileUploaderController.getCurrentPhoto';
-import updatePhotoStatus from '@salesforce/apex/FileUploaderController.updatePhotoStatus';
+import setCurrentPhoto from '@salesforce/apex/FileUploaderController.setCurrentPhoto';
 
 export default class FileUploader extends LightningElement {
     @api recordId;
     @track fileUrl;
     @track contentDocumentId;
 
-    get acceptedFormats() {
-        return ['.jpg', '.jpeg', '.png'];
-    }
-
     connectedCallback() {
-        this.loadCurrentPhoto();
-    }
-
-    loadCurrentPhoto() {
         getCurrentPhoto({ recordId: this.recordId })
             .then(result => {
                 if (result) {
@@ -25,16 +17,26 @@ export default class FileUploader extends LightningElement {
                 }
             })
             .catch(error => {
-                console.error(error);
+                console.error('Error fetching current photo: ', error);
             });
     }
 
+    get acceptedFormats() {
+        return ['.jpg', '.jpeg', '.png'];
+    }
+
+    get allowMultiple() {
+        return false;
+    }
+
     handleUploadFinished(event) {
-        const uploadedFile = event.detail.files[0];
-        const documentId = uploadedFile.documentId;
-        updatePhotoStatus({ recordId: this.recordId, contentVersionId: uploadedFile.contentVersionId, documentId: documentId })
+        const file = event.detail.files[0];
+        this.contentDocumentId = file.documentId;
+        const versionId = file.contentVersionId;
+        this.fileUrl = '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=' + versionId;
+
+        setCurrentPhoto({ recordId: this.recordId, documentId: this.contentDocumentId })
             .then(() => {
-                this.fileUrl = '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=' + uploadedFile.contentVersionId;
                 this.dispatchEvent(new ShowToastEvent({
                     title: 'Success',
                     message: 'Photo uploaded and set as current.',
@@ -42,8 +44,9 @@ export default class FileUploader extends LightningElement {
                 }));
             })
             .catch(error => {
+                console.error('Error setting current photo: ', error);
                 this.dispatchEvent(new ShowToastEvent({
-                    title: 'Upload failed',
+                    title: 'Upload Error',
                     message: error.body.message,
                     variant: 'error'
                 }));

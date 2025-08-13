@@ -4,7 +4,4 @@
     <label>Is Currently Displayed</label>
     <type>Checkbox</type>
     <defaultValue>false</defaultValue>
-    <trackHistory>false</trackHistory>
-    <trackTrending>false</trackTrending>
-    <required>false</required>
 </CustomField>
