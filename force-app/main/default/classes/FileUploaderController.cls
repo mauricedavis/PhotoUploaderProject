@@ -1,14 +1,20 @@
 public with sharing class FileUploaderController {
-  @AuraEnabled(cacheable=true)
-  public static String fetchImageUrl(Id recordId) {
-    List<ContentDocumentLink> links = [SELECT ContentDocument.LatestPublishedVersionId
-      FROM ContentDocumentLink
-      WHERE LinkedEntityId = :recordId
-      ORDER BY ContentDocument.CreatedDate DESC LIMIT 1];
-    if (!links.isEmpty()) {
-      return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId='
-             + links[0].ContentDocument.LatestPublishedVersionId;
+    @AuraEnabled(cacheable=true)
+    public static Map<String, String> getLatestContentDocument(Id recordId) {
+        List<ContentDocumentLink> links = [
+            SELECT ContentDocumentId, ContentDocument.LatestPublishedVersionId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId = :recordId
+            ORDER BY ContentDocument.CreatedDate DESC
+            LIMIT 1
+        ];
+
+        if (!links.isEmpty()) {
+            return new Map<String, String>{
+                'documentId' => links[0].ContentDocumentId,
+                'versionId' => links[0].ContentDocument.LatestPublishedVersionId
+            };
+        }
+        return null;
     }
-    return null;
-  }
 }

@@ -48,3 +48,6 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ## deploy/2025-08-13--0914AM
 - Persist image after refresh
 
+
+### deploy/2025-08-13--0918AM
+- ?? Added debug logging for persistent image rendering
