@@ -66,3 +66,14 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Added support for 'Is Currently Displayed' field on ContentVersion
 - Enabled drag-and-drop image replacement with persistence
 
+
+### 2025-08-13--0225PM
+- Added Is_Currently_Displayed__c field to ContentVersion object
+- Fixed deployment errors in Apex controller and LWC
+- Ensured image persists after page refresh
+
+
+### 2025-08-14--0902AM
+- ? FIXED Apex syntax errors in FileUploaderController.cls
+- ? Added working Apex methods: getCurrentPhoto & setCurrentPhoto
+- ? Confirmed LWC JS references match controller methods
