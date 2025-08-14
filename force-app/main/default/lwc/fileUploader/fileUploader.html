@@ -1,10 +1,11 @@
-<template>
+﻿<template>
     <lightning-card title="Photo Uploader" icon-name="utility:upload">
         <template if:true={fileUrl}>
-            <div class="slds-align_absolute-center slds-p-around_medium">
-                <img src={fileUrl} class="uploaded-img" alt="Uploaded Image" style="max-height:400px; max-width:100%; border-radius:8px;" />
+            <div class="slds-p-around_medium">
+                <img src={fileUrl} alt="Uploaded Photo" style="max-width:100%; height:auto; border-radius:8px;" />
             </div>
         </template>
+
         <template if:false={fileUrl}>
             <div class="slds-p-around_medium">
                 <lightning-file-upload
