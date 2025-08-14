@@ -82,3 +82,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Fixed Apex syntax errors
 - Added getCurrentPhoto & setCurrentPhoto methods
 
+
+### 2025-08-14--0913AM
+- Fix: Corrected syntax in FileUploaderController.cls for Apex compatibility
+
