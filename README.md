@@ -5,7 +5,7 @@
 
 # Salesforce DX Project: Next Steps
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Now that youâ€™ve created a Salesforce DX project, whatâ€™s next? Here are some documentation resources to get you started.
 
 ## How Do You Plan to Deploy Your Changes?
 
@@ -43,7 +43,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - ?? Image now persists across page reloads.
 
 
-### ?? deploy/2025-08-13--0910AM � Ensure uploaded image persists after page refresh
+### ?? deploy/2025-08-13--0910AM – Ensure uploaded image persists after page refresh
 
 ## deploy/2025-08-13--0914AM
 - Persist image after refresh
@@ -96,7 +96,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 
 ### 2025-08-15--0559PM
 - Drag-and-drop **replace** over current image
-- Enforce **single** “Is Currently Displayed” photo per record
+- Enforce **single** 'Is Currently Displayed' photo per record
 - Persist photo across refresh; show **Upload** when none flagged
 - Auto-branch + tag; changelog update
 
