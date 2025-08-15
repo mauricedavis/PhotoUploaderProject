@@ -86,3 +86,17 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### 2025-08-14--0913AM
 - Fix: Corrected syntax in FileUploaderController.cls for Apex compatibility
 
+
+### 2025-08-15 12:42:10
+- Feature: drag-n-drop replace + single-current enforcement; show uploader when none current; absolute path + UTF-8 no BOM; deploy 2025-08-15 12:42:10
+
+
+## Changelog
+
+
+### 2025-08-15--0559PM
+- Drag-and-drop **replace** over current image
+- Enforce **single** “Is Currently Displayed” photo per record
+- Persist photo across refresh; show **Upload** when none flagged
+- Auto-branch + tag; changelog update
+

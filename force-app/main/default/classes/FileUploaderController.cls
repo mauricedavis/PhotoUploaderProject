@@ -1,10 +1,9 @@
-﻿public with sharing class FileUploaderController {
+public with sharing class FileUploaderController {
 
     @AuraEnabled(cacheable=true)
     public static ContentVersion getCurrentPhoto(Id recordId) {
         if (recordId == null) return null;
 
-        // Collect linked documents for this record
         Set<Id> docIds = new Set<Id>();
         for (ContentDocumentLink cdl : [
             SELECT ContentDocumentId
@@ -15,9 +14,9 @@
         }
         if (docIds.isEmpty()) return null;
 
-        // Preferred match: flagged as 'record photo' and currently displayed
+        // Prefer the flagged "record photo"
         List<ContentVersion> flagged = [
-            SELECT Id, ContentDocumentId
+            SELECT Id, ContentDocumentId, Description, Is_Currently_Displayed__c
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
               AND Description = 'record photo'
@@ -27,9 +26,9 @@
         ];
         if (!flagged.isEmpty()) return flagged[0];
 
-        // Fallback: most recent 'record photo' among linked documents
+        // Fallback: most recent "record photo"
         List<ContentVersion> fallback = [
-            SELECT Id, ContentDocumentId
+            SELECT Id, ContentDocumentId, Description
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
               AND Description = 'record photo'
@@ -43,7 +42,6 @@
     public static void setCurrentPhoto(Id recordId, Id versionId) {
         if (recordId == null || versionId == null) return;
 
-        // Collect linked documents for this record
         Set<Id> docIds = new Set<Id>();
         for (ContentDocumentLink cdl : [
             SELECT ContentDocumentId
@@ -54,7 +52,7 @@
         }
         if (docIds.isEmpty()) return;
 
-        // Unset any previous current photos for this record
+        // Unflag any currently displayed "record photo" on this record
         List<ContentVersion> toUpdate = new List<ContentVersion>();
         for (ContentVersion cv : [
             SELECT Id, Is_Currently_Displayed__c
@@ -67,17 +65,15 @@
             toUpdate.add(cv);
         }
 
-        // Set the uploaded version as current + ensure proper description
+        // Flag the requested version (and ensure it's typed as a record photo)
         ContentVersion newCv = [
-            SELECT Id, Is_Currently_Displayed__c, Description
+            SELECT Id, Description, Is_Currently_Displayed__c
             FROM ContentVersion
             WHERE Id = :versionId
             LIMIT 1
         ];
+        if (newCv.Description != 'record photo') newCv.Description = 'record photo';
         newCv.Is_Currently_Displayed__c = true;
-        if (newCv.Description != 'record photo') {
-            newCv.Description = 'record photo';
-        }
         toUpdate.add(newCv);
 
         update toUpdate;

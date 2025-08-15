@@ -1,0 +1,175 @@
+﻿{
+  "status": 1,
+  "result": {
+    "checkOnly": false,
+    "completedDate": "2025-08-14T16:53:56.000Z",
+    "createdBy": "005Hu00000QFn1I",
+    "createdByName": "Attain Partners",
+    "createdDate": "2025-08-14T16:53:53.000Z",
+    "details": {
+      "componentFailures": [
+        {
+          "changed": false,
+          "componentType": "LightningComponentBundle",
+          "created": false,
+          "createdDate": "2025-08-14T16:53:53.000Z",
+          "deleted": false,
+          "fileName": "lwc/fileUploader/fileUploader.js-meta.xml",
+          "fullName": "fileUploader",
+          "problem": "Error parsing file: LWC Metadata Xml Parser: ParseError at [row,col]:[1,1]\nMessage: Content is not allowed in prolog.",
+          "problemType": "Error",
+          "success": false
+        },
+        {
+          "changed": false,
+          "columnNumber": 1,
+          "componentType": "ApexClass",
+          "created": false,
+          "createdDate": "2025-08-14T16:53:56.000Z",
+          "deleted": false,
+          "fileName": "classes/FileUploaderController.cls",
+          "fullName": "FileUploaderController",
+          "lineNumber": 1,
+          "problem": "Invalid identifier '∩╗┐public'. Apex identifiers must start with an ASCII letter (a-z or A-Z) followed by any number of ASCII letters (a-z or A-Z), digits (0 - 9), '$', '_'.",
+          "problemType": "Error",
+          "success": false
+        },
+        {
+          "changed": false,
+          "columnNumber": 28,
+          "componentType": "ApexClass",
+          "created": false,
+          "createdDate": "2025-08-14T16:53:56.000Z",
+          "deleted": false,
+          "fileName": "classes/FileUploaderController.cls",
+          "fullName": "FileUploaderController",
+          "lineNumber": 1,
+          "problem": "Top-level type must have public or global visibility",
+          "problemType": "Error",
+          "success": false
+        },
+        {
+          "changed": false,
+          "componentType": "LightningComponentBundle",
+          "created": false,
+          "createdDate": "2025-08-14T16:53:56.000Z",
+          "deleted": false,
+          "fileName": "lwc/fileUploader/fileUploader.js",
+          "fullName": "fileUploader",
+          "problem": "XML parse error: ParseError at [row,col]:[1,1]\nMessage: Content is not allowed in prolog.",
+          "problemType": "Error",
+          "success": false
+        }
+      ],
+      "componentSuccesses": [
+        {
+          "changed": false,
+          "componentType": "CustomField",
+          "created": false,
+          "createdDate": "2025-08-14T16:53:55.000Z",
+          "deleted": false,
+          "fileName": "objects/ContentVersion.object",
+          "fullName": "ContentVersion.Is_Currently_Displayed__c",
+          "id": "00NOu000005RBCbMAO",
+          "success": true
+        },
+        {
+          "changed": true,
+          "componentType": "LightningComponentBundle",
+          "created": false,
+          "createdDate": "2025-08-14T16:53:56.000Z",
+          "deleted": false,
+          "fileName": "lwc/fileUploader",
+          "fullName": "fileUploader",
+          "id": "0RbOu000000DojlKAC",
+          "success": true
+        },
+        {
+          "changed": true,
+          "componentType": "",
+          "created": false,
+          "createdDate": "2025-08-14T16:53:56.000Z",
+          "deleted": false,
+          "fileName": "package.xml",
+          "fullName": "package.xml",
+          "success": true
+        }
+      ],
+      "runTestResult": {
+        "numFailures": 0,
+        "numTestsRun": 0,
+        "totalTime": 0,
+        "codeCoverage": [],
+        "codeCoverageWarnings": [],
+        "failures": [],
+        "flowCoverage": [],
+        "flowCoverageWarnings": [],
+        "successes": []
+      }
+    },
+    "done": true,
+    "id": "0AfOu00000B6nFpKAJ",
+    "ignoreWarnings": true,
+    "lastModifiedDate": "2025-08-14T16:53:56.000Z",
+    "numberComponentErrors": 4,
+    "numberComponentsDeployed": 2,
+    "numberComponentsTotal": 6,
+    "numberFiles": "11",
+    "numberTestErrors": 0,
+    "numberTestsCompleted": 0,
+    "numberTestsTotal": 0,
+    "rollbackOnError": true,
+    "runTestsEnabled": false,
+    "startDate": "2025-08-14T16:53:53.000Z",
+    "status": "Failed",
+    "success": false,
+    "zipSize": 4086,
+    "files": [
+      {
+        "fullName": "FileUploaderController",
+        "type": "ApexClass",
+        "state": "Failed",
+        "problemType": "Error",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\classes\\FileUploaderController.cls",
+        "lineNumber": 1,
+        "columnNumber": 28,
+        "error": "Top-level type must have public or global visibility (1:28)"
+      },
+      {
+        "fullName": "FileUploaderController",
+        "type": "ApexClass",
+        "state": "Failed",
+        "problemType": "Error",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\classes\\FileUploaderController.cls",
+        "lineNumber": 1,
+        "columnNumber": 1,
+        "error": "Invalid identifier '∩╗┐public'. Apex identifiers must start with an ASCII letter (a-z or A-Z) followed by any number of ASCII letters (a-z or A-Z), digits (0 - 9), '$', '_'. (1:1)"
+      },
+      {
+        "fullName": "ContentVersion.Is_Currently_Displayed__c",
+        "type": "CustomField",
+        "state": "Unchanged",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\objects\\ContentVersion\\fields\\Is_Currently_Displayed__c.field-meta.xml"
+      },
+      {
+        "fullName": "fileUploader",
+        "type": "LightningComponentBundle",
+        "state": "Failed",
+        "problemType": "Error",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\lwc\\fileUploader\\fileUploader.js",
+        "error": "XML parse error: ParseError at [row,col]:[1,1]\nMessage: Content is not allowed in prolog."
+      },
+      {
+        "fullName": "fileUploader",
+        "type": "LightningComponentBundle",
+        "state": "Failed",
+        "problemType": "Error",
+        "filePath": "C:\\Users\\MauriceJDavis\\PhotoUploaderProject\\force-app\\main\\default\\lwc\\fileUploader\\fileUploader.js-meta.xml",
+        "error": "Error parsing file: LWC Metadata Xml Parser: ParseError at [row,col]:[1,1]\nMessage: Content is not allowed in prolog."
+      }
+    ],
+    "zipFileCount": 7,
+    "deployUrl": "https://collegetrack2--attain.sandbox.my.salesforce.com/lightning/setup/DeployStatus/page?address=%2Fchangemgmt%2FmonitorDeploymentsDetails.apexp%3FasyncId%3D0AfOu00000B6nFpKAJ%26retURL%3D%252Fchangemgmt%252FmonitorDeployment.apexp"
+  },
+  "warnings": []
+}

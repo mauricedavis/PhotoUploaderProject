@@ -1,22 +1,35 @@
-﻿<template>
+<template>
     <lightning-card title="Photo Uploader" icon-name="utility:upload">
-        <template if:true={fileUrl}>
-            <div class="slds-p-around_medium">
-                <img src={fileUrl} alt="Uploaded Photo" style="max-width:100%; height:auto; border-radius:8px;" />
-            </div>
-        </template>
+        <div class="wrapper">
+            <template if:true={fileUrl}>
+                <div class="image-box">
+                    <img src={fileUrl} alt="Photo" class="preview" />
+                    <div class="overlay">Drop a photo to replace</div>
 
-        <template if:false={fileUrl}>
-            <div class="slds-p-around_medium">
-                <lightning-file-upload
-                    label="Upload Photo"
-                    name="fileUploader"
-                    accept={acceptedFormats}
-                    record-id={recordId}
-                    onuploadfinished={handleUploadFinished}
-                    multiple={allowMultiple}>
-                </lightning-file-upload>
-            </div>
-        </template>
+                    <!-- Invisible uploader stretched across the image so drag/drop works "over" the photo -->
+                    <div class="cover-slot">
+                        <lightning-file-upload
+                            accept={acceptedFormats}
+                            record-id={recordId}
+                            onuploadfinished={handleUploadFinished}
+                            multiple={allowMultiple}
+                            class="cover-uploader">
+                        </lightning-file-upload>
+                    </div>
+                </div>
+            </template>
+
+            <template if:false={fileUrl}>
+                <div class="uploader-only">
+                    <lightning-file-upload
+                        label="Upload Photo"
+                        accept={acceptedFormats}
+                        record-id={recordId}
+                        onuploadfinished={handleUploadFinished}
+                        multiple={allowMultiple}>
+                    </lightning-file-upload>
+                </div>
+            </template>
+        </div>
     </lightning-card>
 </template>
