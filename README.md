@@ -106,3 +106,9 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Instant preview during upload; swap to persisted URL on save
 - Server-side single **Is Currently Displayed** enforcement on ContentVersion
 - Description auto-set to **record photo**
+
+### 2025-08-19--0505PM
+- Enforce single 'Is Currently Displayed' on every set
+- Instant preview after upload (no refresh)
+- LWC/JS + Apex updated
+

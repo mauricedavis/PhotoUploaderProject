@@ -1,23 +1,22 @@
 <template>
   <lightning-card title="Photo Uploader" icon-name="utility:upload">
-    <div class="frame"
-         ondragover={onDragOver}
-         ondragleave={onDragLeave}
-         ondrop={onDrop}
-         onclick={openPicker}>
+    <template if:true={fileUrl}>
+      <div class="frame">
+        <img class="hero" src={fileUrl} alt="Uploaded image" />
+      </div>
+    </template>
 
-      <template if:true={fileUrl}>
-        <img class="hero" src={fileUrl} alt="Current photo"/>
-      </template>
-
-      <template if:false={fileUrl}>
-        <div class="placeholder">
-          Click or drop an image to upload
-        </div>
-      </template>
-
-      <input class="picker" type="file" accept="image/*" onchange={onPickChange}/>
-      <div class="hint">Drop a photo to replace</div>
-    </div>
+    <template if:false={fileUrl}>
+      <div class="uploader slds-p-around_medium">
+        <lightning-file-upload
+          label="Upload Photo"
+          name="fileUploader"
+          accept={acceptedFormats}
+          record-id={recordId}
+          multiple={allowMultiple}
+          onuploadfinished={handleUploadFinished}>
+        </lightning-file-upload>
+      </div>
+    </template>
   </lightning-card>
 </template>

@@ -14,17 +14,19 @@ public with sharing class FileUploaderController {
         }
         if (docIds.isEmpty()) return null;
 
-        List<ContentVersion> flagged = [
+        // Prefer explicitly pinned "record photo"
+        List<ContentVersion> pinned = [
             SELECT Id, ContentDocumentId
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
-              AND Description = 'record photo'
               AND Is_Currently_Displayed__c = TRUE
+              AND Description = 'record photo'
             ORDER BY LastModifiedDate DESC
             LIMIT 1
         ];
-        if (!flagged.isEmpty()) return flagged[0];
+        if (!pinned.isEmpty()) return pinned[0];
 
+        // Fallback: latest "record photo" even if not pinned
         List<ContentVersion> fallback = [
             SELECT Id, ContentDocumentId
             FROM ContentVersion
@@ -37,71 +39,66 @@ public with sharing class FileUploaderController {
     }
 
     @AuraEnabled
-    public static void setCurrentPhoto(Id recordId, Id versionId) {
-        if (recordId == null || versionId == null) return;
+    public static void setCurrentPhotoSmart(Id recordId, Id documentId, Id versionId) {
+        if (recordId == null && documentId == null && versionId == null) return;
 
+        // Gather all docs linked to the record so we can unpin them
         Set<Id> docIds = new Set<Id>();
-        for (ContentDocumentLink cdl : [
-            SELECT ContentDocumentId FROM ContentDocumentLink
-            WHERE LinkedEntityId = :recordId
-        ]) {
-            docIds.add(cdl.ContentDocumentId);
+        if (recordId != null) {
+            for (ContentDocumentLink cdl : [
+                SELECT ContentDocumentId
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId = :recordId
+            ]) {
+                docIds.add(cdl.ContentDocumentId);
+            }
         }
-        if (docIds.isEmpty()) return;
+        if (documentId != null) {
+            docIds.add(documentId);
+        }
 
+        // Resolve the target version
+        ContentVersion target;
+        if (versionId != null) {
+            List<ContentVersion> tmp = [
+                SELECT Id, ContentDocumentId, Is_Currently_Displayed__c, Description
+                FROM ContentVersion
+                WHERE Id = :versionId
+                LIMIT 1
+            ];
+            if (!tmp.isEmpty()) target = tmp[0];
+        }
+        if (target == null && documentId != null) {
+            List<ContentVersion> latest = [
+                SELECT Id, ContentDocumentId, Is_Currently_Displayed__c, Description
+                FROM ContentVersion
+                WHERE ContentDocumentId = :documentId
+                ORDER BY LastModifiedDate DESC
+                LIMIT 1
+            ];
+            if (!latest.isEmpty()) target = latest[0];
+        }
+        if (target == null) return;
+
+        // Unpin everything else for this record
         List<ContentVersion> updates = new List<ContentVersion>();
-
-        for (ContentVersion cv : [
-            SELECT Id, Is_Currently_Displayed__c
-            FROM ContentVersion
-            WHERE ContentDocumentId IN :docIds
-              AND Description = 'record photo'
-              AND Is_Currently_Displayed__c = TRUE
-              AND Id != :versionId
-        ]) {
-            cv.Is_Currently_Displayed__c = false;
-            updates.add(cv);
+        if (!docIds.isEmpty()) {
+            for (ContentVersion cv : [
+                SELECT Id, Is_Currently_Displayed__c
+                FROM ContentVersion
+                WHERE ContentDocumentId IN :docIds
+                  AND Is_Currently_Displayed__c = TRUE
+            ]) {
+                cv.Is_Currently_Displayed__c = false;
+                updates.add(cv);
+            }
         }
 
-        ContentVersion chosen = [
-            SELECT Id, Is_Currently_Displayed__c, Description, ContentDocumentId
-            FROM ContentVersion
-            WHERE Id = :versionId
-            LIMIT 1
-        ];
-        chosen.Is_Currently_Displayed__c = true;
-        if (chosen.Description != 'record photo') chosen.Description = 'record photo';
-        updates.add(chosen);
+        // Pin the chosen version and mark as "record photo"
+        target.Is_Currently_Displayed__c = true;
+        if (target.Description != 'record photo') target.Description = 'record photo';
+        updates.add(target);
 
         update updates;
-    }
-
-    @AuraEnabled
-    public static Id uploadPhotoFromLwc(Id recordId, String fileName, String dataUrl, String contentType) {
-        if (recordId == null || String.isBlank(fileName) || String.isBlank(dataUrl)) return null;
-
-        // data:image/png;base64,AAAA...
-        String base64Body = dataUrl.contains(',') ? dataUrl.substring(dataUrl.indexOf(',')+1) : dataUrl;
-        Blob body = EncodingUtil.base64Decode(base64Body);
-
-        ContentVersion cv = new ContentVersion();
-        cv.Title        = (fileName.contains('.') ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName);
-        cv.PathOnClient = fileName;
-        cv.VersionData  = body;
-        cv.Description  = 'record photo';
-        insert cv;
-
-        Id docId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId;
-
-        ContentDocumentLink cdl = new ContentDocumentLink(
-            ContentDocumentId = docId,
-            LinkedEntityId    = recordId,
-            ShareType         = 'V',
-            Visibility        = 'AllUsers'
-        );
-        insert cdl;
-
-        setCurrentPhoto(recordId, cv.Id);
-        return cv.Id;
     }
 }

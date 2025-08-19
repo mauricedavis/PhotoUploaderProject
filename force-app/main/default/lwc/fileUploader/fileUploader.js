@@ -1,13 +1,15 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import getCurrentPhoto       from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
-import uploadPhotoFromLwc    from "@salesforce/apex/FileUploaderController.uploadPhotoFromLwc";
+import getCurrentPhoto from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
+import setCurrentPhotoSmart from "@salesforce/apex/FileUploaderController.setCurrentPhotoSmart";
 
 export default class FileUploader extends LightningElement {
   @api recordId;
   @track fileUrl;
 
-  connectedCallback() { this.refresh(); }
+  connectedCallback() {
+    this.refresh();
+  }
 
   refresh() {
     if (!this.recordId) { this.fileUrl = null; return; }
@@ -15,82 +17,38 @@ export default class FileUploader extends LightningElement {
       .then(cv => {
         this.fileUrl = cv ? ("/sfc/servlet.shepherd/version/download/" + cv.Id) : null;
       })
-      .catch(e => {
-        // eslint-disable-next-line no-console
-        console.error("getCurrentPhoto error", e);
-        this.fileUrl = null;
-      });
+      .catch(() => { this.fileUrl = null; });
   }
 
-  onDragOver(evt) {
-    evt.preventDefault();
-    this.template.querySelector(".frame")?.classList.add("dragging");
-  }
-  onDragLeave() {
-    this.template.querySelector(".frame")?.classList.remove("dragging");
-  }
+  get acceptedFormats() { return [".jpg", ".jpeg", ".png"]; }
+  get allowMultiple() { return false; }
 
-  async onDrop(evt) {
-    evt.preventDefault();
-    this.template.querySelector(".frame")?.classList.remove("dragging");
-    const file = evt?.dataTransfer?.files?.[0];
-    if (file) { await this.upload(file); }
-  }
+  handleUploadFinished(event) {
+    const file = event?.detail?.files?.[0];
+    if (!file) return;
 
-  openPicker() {
-    const input = this.template.querySelector(".picker");
-    if (input) input.click();
-  }
-  async onPickChange(evt) {
-    const file = evt?.target?.files?.[0];
-    if (file) { await this.upload(file); }
-    evt.target.value = ""; // allow same-file re-select
-  }
+    // Instant preview: documentId always present
+    const docId = file.documentId;
+    this.fileUrl = "/sfc/servlet.shepherd/document/download/" + docId;
 
-  async upload(file) {
-    if (!this.recordId) return;
-
-    // 1) Optimistic preview
-    const tempUrl = URL.createObjectURL(file);
-    this.fileUrl  = tempUrl;
-
-    // 2) Read as base64 data URL and send to Apex
-    const dataUrl = await new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.onerror = reject;
-      r.readAsDataURL(file);
-    });
-
-    uploadPhotoFromLwc({
+    // Server-side: always enforce single "Is Currently Displayed"
+    const versionId = file.contentVersionId || file.versionId || null;
+    setCurrentPhotoSmart({
       recordId: this.recordId,
-      fileName: file.name,
-      dataUrl: dataUrl,
-      contentType: file.type
+      documentId: docId,
+      versionId: versionId
     })
-    .then(versionId => {
-      // 3) Swap to the persisted file URL
-      URL.revokeObjectURL(tempUrl);
-      this.fileUrl = "/sfc/servlet.shepherd/version/download/" + versionId;
-
+    .then(() => {
       this.dispatchEvent(new ShowToastEvent({
         title: "Success",
         message: "Photo uploaded and set as current.",
         variant: "success"
       }));
+      // Optional: refresh persisted URL (not required for instant preview)
+      // this.refresh();
     })
-    .catch(err => {
-      // eslint-disable-next-line no-console
-      console.error("uploadPhotoFromLwc error", err);
-      URL.revokeObjectURL(tempUrl);
-      this.dispatchEvent(new ShowToastEvent({
-        title: "Upload Error",
-        message: err?.body?.message || "Unable to upload photo.",
-        variant: "error"
-      }));
-      this.refresh(); // fall back to persisted state
+    .catch(() => {
+      // Non-blocking; preview already shown
     });
   }
-
-  get allowMultiple() { return false; }
 }
