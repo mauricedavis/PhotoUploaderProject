@@ -100,3 +100,9 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Persist photo across refresh; show **Upload** when none flagged
 - Auto-branch + tag; changelog update
 
+
+### 2025-08-19--1539PM
+- Drag-and-drop image replace (no page refresh)
+- Instant preview during upload; swap to persisted URL on save
+- Server-side single **Is Currently Displayed** enforcement on ContentVersion
+- Description auto-set to **record photo**

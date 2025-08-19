@@ -1,35 +1,23 @@
 <template>
-    <lightning-card title="Photo Uploader" icon-name="utility:upload">
-        <div class="wrapper">
-            <template if:true={fileUrl}>
-                <div class="image-box">
-                    <img src={fileUrl} alt="Photo" class="preview" />
-                    <div class="overlay">Drop a photo to replace</div>
+  <lightning-card title="Photo Uploader" icon-name="utility:upload">
+    <div class="frame"
+         ondragover={onDragOver}
+         ondragleave={onDragLeave}
+         ondrop={onDrop}
+         onclick={openPicker}>
 
-                    <!-- Invisible uploader stretched across the image so drag/drop works "over" the photo -->
-                    <div class="cover-slot">
-                        <lightning-file-upload
-                            accept={acceptedFormats}
-                            record-id={recordId}
-                            onuploadfinished={handleUploadFinished}
-                            multiple={allowMultiple}
-                            class="cover-uploader">
-                        </lightning-file-upload>
-                    </div>
-                </div>
-            </template>
+      <template if:true={fileUrl}>
+        <img class="hero" src={fileUrl} alt="Current photo"/>
+      </template>
 
-            <template if:false={fileUrl}>
-                <div class="uploader-only">
-                    <lightning-file-upload
-                        label="Upload Photo"
-                        accept={acceptedFormats}
-                        record-id={recordId}
-                        onuploadfinished={handleUploadFinished}
-                        multiple={allowMultiple}>
-                    </lightning-file-upload>
-                </div>
-            </template>
+      <template if:false={fileUrl}>
+        <div class="placeholder">
+          Click or drop an image to upload
         </div>
-    </lightning-card>
+      </template>
+
+      <input class="picker" type="file" accept="image/*" onchange={onPickChange}/>
+      <div class="hint">Drop a photo to replace</div>
+    </div>
+  </lightning-card>
 </template>

@@ -1,77 +1,96 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import getCurrentPhoto from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
-import setCurrentPhoto from "@salesforce/apex/FileUploaderController.setCurrentPhoto";
+import getCurrentPhoto       from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
+import uploadPhotoFromLwc    from "@salesforce/apex/FileUploaderController.uploadPhotoFromLwc";
 
 export default class FileUploader extends LightningElement {
-    @api recordId;
-    @track fileUrl;
-    @track versionId;
+  @api recordId;
+  @track fileUrl;
 
-    connectedCallback() {
-        this.refreshCurrent();
-    }
+  connectedCallback() { this.refresh(); }
 
-    refreshCurrent() {
-        if (!this.recordId) return;
-        getCurrentPhoto({ recordId: this.recordId })
-            .then((cv) => {
-                if (cv) {
-                    this.versionId = cv.Id;
-                    this.fileUrl =
-                        "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" +
-                        cv.Id;
-                } else {
-                    this.versionId = null;
-                    this.fileUrl = null;
-                }
-            })
-            .catch((e) => {
-                // Silently fail to avoid blocking page
-                /* eslint-disable no-console */
-                console.error("getCurrentPhoto error", e);
-            });
-    }
+  refresh() {
+    if (!this.recordId) { this.fileUrl = null; return; }
+    getCurrentPhoto({ recordId: this.recordId })
+      .then(cv => {
+        this.fileUrl = cv ? ("/sfc/servlet.shepherd/version/download/" + cv.Id) : null;
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.error("getCurrentPhoto error", e);
+        this.fileUrl = null;
+      });
+  }
 
-    get acceptedFormats() {
-        return [".jpg", ".jpeg", ".png"];
-    }
-    get allowMultiple() {
-        return false;
-    }
+  onDragOver(evt) {
+    evt.preventDefault();
+    this.template.querySelector(".frame")?.classList.add("dragging");
+  }
+  onDragLeave() {
+    this.template.querySelector(".frame")?.classList.remove("dragging");
+  }
 
-    handleUploadFinished(event) {
-        const file = event.detail?.files?.[0];
-        if (!file) return;
+  async onDrop(evt) {
+    evt.preventDefault();
+    this.template.querySelector(".frame")?.classList.remove("dragging");
+    const file = evt?.dataTransfer?.files?.[0];
+    if (file) { await this.upload(file); }
+  }
 
-        const newVersionId = file.contentVersionId;
+  openPicker() {
+    const input = this.template.querySelector(".picker");
+    if (input) input.click();
+  }
+  async onPickChange(evt) {
+    const file = evt?.target?.files?.[0];
+    if (file) { await this.upload(file); }
+    evt.target.value = ""; // allow same-file re-select
+  }
 
-        // Optimistic UI
-        this.fileUrl =
-            "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" +
-            newVersionId;
+  async upload(file) {
+    if (!this.recordId) return;
 
-        // Mark the uploaded image as the only "currently displayed"
-        setCurrentPhoto({ recordId: this.recordId, versionId: newVersionId })
-            .then(() => {
-                this.versionId = newVersionId;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: "Success",
-                        message: "Photo uploaded and set as current.",
-                        variant: "success"
-                    })
-                );
-                this.refreshCurrent();
-            })
-            .catch((e) => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: "Upload Error",
-                        message: e?.body?.message || "Unable to set current photo",
-                        variant: "error"
-                    })
-                );
-            });
-    }
+    // 1) Optimistic preview
+    const tempUrl = URL.createObjectURL(file);
+    this.fileUrl  = tempUrl;
+
+    // 2) Read as base64 data URL and send to Apex
+    const dataUrl = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+
+    uploadPhotoFromLwc({
+      recordId: this.recordId,
+      fileName: file.name,
+      dataUrl: dataUrl,
+      contentType: file.type
+    })
+    .then(versionId => {
+      // 3) Swap to the persisted file URL
+      URL.revokeObjectURL(tempUrl);
+      this.fileUrl = "/sfc/servlet.shepherd/version/download/" + versionId;
+
+      this.dispatchEvent(new ShowToastEvent({
+        title: "Success",
+        message: "Photo uploaded and set as current.",
+        variant: "success"
+      }));
+    })
+    .catch(err => {
+      // eslint-disable-next-line no-console
+      console.error("uploadPhotoFromLwc error", err);
+      URL.revokeObjectURL(tempUrl);
+      this.dispatchEvent(new ShowToastEvent({
+        title: "Upload Error",
+        message: err?.body?.message || "Unable to upload photo.",
+        variant: "error"
+      }));
+      this.refresh(); // fall back to persisted state
+    });
+  }
+
+  get allowMultiple() { return false; }
 }
