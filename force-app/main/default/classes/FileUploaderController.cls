@@ -101,4 +101,13 @@ public with sharing class FileUploaderController {
 
         update updates;
     }
+    // --- Back-compat overloads for older LWC bundles ---
+    @AuraEnabled
+    public static void uploadPhotoFromLwc(Id recordId, Id documentId, Id versionId) {
+        setCurrentPhotoSmart(recordId, documentId, versionId);
+    }
+    @AuraEnabled
+    public static void uploadPhotoFromLwc(Id recordId, Id contentDocumentId) {
+        setCurrentPhotoSmart(recordId, contentDocumentId, null);
+    }
 }

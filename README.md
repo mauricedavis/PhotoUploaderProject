@@ -112,3 +112,6 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Instant preview after upload (no refresh)
 - LWC/JS + Apex updated
 
+### 2025-08-20--0831AM
+- Add back-compat Apex wrappers: uploadPhotoFromLwc(..) -> setCurrentPhotoSmart(..)
+- Prevent 'No apex action available' error from older/cached LWC bundles
