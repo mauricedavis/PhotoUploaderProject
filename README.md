@@ -127,3 +127,8 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Drag-and-drop now uses DataTransfer **items** or **files**; stopPropagation + dropEffect
 - Enforce one-and-only-one **Is Currently Displayed** per Account (Apex + Trigger)
 - Instant render preserved for both Upload button and drop
+## deploy/2025-08-20--0558PM
+- Apex patch: explicit single 'Is Currently Displayed' enforcement on every upload/set; keep trigger
+- setCurrentPhotoSmart(): flips OFF other current 'record photo' versions, sets target ON
+- createAndSetPhoto(): creates version, links to record, then calls setCurrentPhotoSmart()
+- Back-compat wrappers preserved for older LWC bundles
