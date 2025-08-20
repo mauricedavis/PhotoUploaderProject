@@ -115,3 +115,10 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### 2025-08-20--0831AM
 - Add back-compat Apex wrappers: uploadPhotoFromLwc(..) -> setCurrentPhotoSmart(..)
 - Prevent 'No apex action available' error from older/cached LWC bundles
+## deploy/2025-08-20--0914AM
+- Drag&Drop replace + instant render; single-current enforcement (Apex + optional trigger); LWC polish
+- Drag-and-drop over image (inline Apex upload, ~6 MB limit)
+- Instant image render after both paths (drop or Upload Files)
+- Enforce only one **Is Currently Displayed** per Account
+- Optional trigger: keeps rule even when changes happen outside the LWC
+
