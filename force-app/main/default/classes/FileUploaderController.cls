@@ -1,7 +1,6 @@
 public with sharing class FileUploaderController {
     private static final String RECORD_PHOTO_DESC = 'record photo';
 
-    // Return the current photo (preferred: Is_Currently_Displayed__c=true)
     @AuraEnabled(cacheable=true)
     public static ContentVersion getCurrentPhoto(Id recordId) {
         if (recordId == null) return null;
@@ -11,12 +10,9 @@ public with sharing class FileUploaderController {
             SELECT ContentDocumentId
             FROM ContentDocumentLink
             WHERE LinkedEntityId = :recordId
-        ]) {
-            docIds.add(cdl.ContentDocumentId);
-        }
+        ]) docIds.add(cdl.ContentDocumentId);
         if (docIds.isEmpty()) return null;
 
-        // Prefer flagged current
         List<ContentVersion> flagged = [
             SELECT Id, ContentDocumentId
             FROM ContentVersion
@@ -28,7 +24,6 @@ public with sharing class FileUploaderController {
         ];
         if (!flagged.isEmpty()) return flagged[0];
 
-        // Fallback to latest "record photo"
         List<ContentVersion> latest = [
             SELECT Id, ContentDocumentId
             FROM ContentVersion
@@ -40,7 +35,7 @@ public with sharing class FileUploaderController {
         return latest.isEmpty() ? null : latest[0];
     }
 
-    // Flip off every other "current" for that Account and set target version true
+    // Turn off every other "current" for the same Account; set target true
     @AuraEnabled
     public static void setCurrentPhotoSmart(Id recordId, Id versionId) {
         if (recordId == null || versionId == null) return;
@@ -50,24 +45,19 @@ public with sharing class FileUploaderController {
             SELECT ContentDocumentId
             FROM ContentDocumentLink
             WHERE LinkedEntityId = :recordId
-        ]) {
-            docIds.add(cdl.ContentDocumentId);
-        }
+        ]) docIds.add(cdl.ContentDocumentId);
         if (docIds.isEmpty()) return;
 
-        List<ContentVersion> upd = new List<ContentVersion>();
+        List<ContentVersion> updates = new List<ContentVersion>();
 
-        for (ContentVersion cv : [
+        for (ContentVersion other : [
             SELECT Id, Is_Currently_Displayed__c
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
               AND Description = :RECORD_PHOTO_DESC
               AND Is_Currently_Displayed__c = TRUE
               AND Id != :versionId
-        ]) {
-            cv.Is_Currently_Displayed__c = false;
-            upd.add(cv);
-        }
+        ]) { other.Is_Currently_Displayed__c = false; updates.add(other); }
 
         ContentVersion target = [
             SELECT Id, Is_Currently_Displayed__c, Description
@@ -77,9 +67,9 @@ public with sharing class FileUploaderController {
         ];
         target.Is_Currently_Displayed__c = true;
         if (target.Description != RECORD_PHOTO_DESC) target.Description = RECORD_PHOTO_DESC;
-        upd.add(target);
+        updates.add(target);
 
-        if (!upd.isEmpty()) update upd;
+        if (!updates.isEmpty()) update updates;
     }
 
     public class UploadResult {
@@ -88,17 +78,15 @@ public with sharing class FileUploaderController {
         @AuraEnabled public String message;
     }
 
-    // Create a new ContentVersion from base64 and make it current
-    // NOTE: ~6 MB limit for synchronous Apex uploads
+    // Drag&drop path: create version from base64, link to Account, mark current
     @AuraEnabled
     public static UploadResult createAndSetPhoto(Id recordId, String fileName, String base64Data, String contentType) {
-        if (String.isBlank(base64Data) || recordId == null)
-            throw new AuraHandledException('No file contents or recordId.');
+        if (recordId == null || String.isBlank(base64Data))
+            throw new AuraHandledException('Missing recordId or file data.');
 
         Blob body = EncodingUtil.base64Decode(base64Data);
-        if (body.size() > 6000000) { // guard for big files
-            throw new AuraHandledException('File too large to upload inline (>6 MB). Please use the Upload Files button.');
-        }
+        if (body.size() > 6000000)
+            throw new AuraHandledException('File too large for inline upload (>6 MB). Use Upload Files button.');
 
         if (String.isBlank(fileName)) fileName = 'photo.jpg';
         String title = fileName;
@@ -115,16 +103,15 @@ public with sharing class FileUploaderController {
         );
         insert cv;
 
-        // Get the ContentDocumentId then link it to the record
         cv = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id];
+
         insert new ContentDocumentLink(
             ContentDocumentId = cv.ContentDocumentId,
-            LinkedEntityId = recordId,
-            ShareType = 'V',
-            Visibility = 'AllUsers'
+            LinkedEntityId    = recordId,
+            ShareType         = 'V',
+            Visibility        = 'AllUsers'
         );
 
-        // Enforce single current for that record
         setCurrentPhotoSmart(recordId, cv.Id);
 
         UploadResult res = new UploadResult();

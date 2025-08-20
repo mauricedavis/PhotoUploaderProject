@@ -15,12 +15,12 @@
       <template if:false={fileUrl}>
         <div class="uploader">
           <lightning-file-upload
-              label="Upload Photo"
-              name="fileUploader"
-              accept={acceptedFormats}
-              record-id={recordId}
-              onuploadfinished={handleUploadFinished}
-              multiple={false}>
+            label="Upload Photo"
+            name="fileUploader"
+            accept={acceptedFormats}
+            record-id={recordId}
+            onuploadfinished={handleUploadFinished}
+            multiple={false}>
           </lightning-file-upload>
         </div>
       </template>

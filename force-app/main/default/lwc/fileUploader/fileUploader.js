@@ -1,28 +1,19 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-
-import getCurrentPhoto        from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
-import setCurrentPhotoSmart   from "@salesforce/apex/FileUploaderController.setCurrentPhotoSmart";
-import createAndSetPhoto      from "@salesforce/apex/FileUploaderController.createAndSetPhoto";
+import getCurrentPhoto      from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
+import setCurrentPhotoSmart from "@salesforce/apex/FileUploaderController.setCurrentPhotoSmart";
+import createAndSetPhoto    from "@salesforce/apex/FileUploaderController.createAndSetPhoto";
 
 export default class FileUploader extends LightningElement {
   @api recordId;
-
   @track fileUrl;
   @track contentDocumentId;
-
   @track isDragging = false;
 
-  connectedCallback() {
-    this.refreshCurrent();
-  }
+  connectedCallback() { this.refreshCurrent(); }
 
-  // ----- UI helpers -----
-  get acceptedFormats() {
-    return [".jpg", ".jpeg", ".png"];
-  }
+  get acceptedFormats() { return [".jpg", ".jpeg", ".png"]; }
 
-  // Build CDN URL quickly
   makeUrl(versionId) {
     return "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + versionId;
   }
@@ -42,72 +33,58 @@ export default class FileUploader extends LightningElement {
       .catch(err => console.error("getCurrentPhoto error", err));
   }
 
-  // ----- Standard upload button path -----
+  // --- Standard Upload button path (instant render) ---
   async handleUploadFinished(evt) {
     try {
-      const f = evt.detail.files?.[0];
+      const f = evt.detail?.files?.[0];
       if (!f) return;
 
-      // Render immediately from event
-      this.fileUrl = this.makeUrl(f.contentVersionId);
+      this.fileUrl = this.makeUrl(f.contentVersionId);      // instant render
       this.contentDocumentId = f.documentId;
 
-      // Enforce single-current
       await setCurrentPhotoSmart({ recordId: this.recordId, versionId: f.contentVersionId });
 
-      this.dispatchEvent(
-        new ShowToastEvent({
-          title: "Uploaded",
-          message: "Photo uploaded and set as current.",
-          variant: "success"
-        })
-      );
+      this.toast("Photo uploaded and set as current.", "success");
     } catch (e) {
       console.error(e);
-      this.dispatchEvent(
-        new ShowToastEvent({
-          title: "Upload Error",
-          message: e?.body?.message || e.message,
-          variant: "error"
-        })
-      );
+      this.toast(e?.body?.message || e.message, "error");
     }
   }
 
-  // ----- Drag & Drop path -----
+  // --- Drag & Drop path (robust: items or files) ---
   handleDragOver(e) {
     e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
   }
-  handleDragEnter(e) {
-    e.preventDefault();
-    this.isDragging = true;
-  }
-  handleDragLeave(e) {
-    e.preventDefault();
-    this.isDragging = false;
-  }
+  handleDragEnter(e) { e.preventDefault(); e.stopPropagation(); this.isDragging = true; }
+  handleDragLeave(e) { e.preventDefault(); e.stopPropagation(); this.isDragging = false; }
 
   handleDrop(e) {
     e.preventDefault();
+    e.stopPropagation();
     this.isDragging = false;
 
-    const files = e.dataTransfer?.files;
-    if (!files || !files.length) return;
-    const file = files[0];
+    const dt = e.dataTransfer;
+    let file = null;
 
-    // Light check (Apex will hard-enforce limits)
+    if (dt?.files?.length) {
+      file = dt.files[0];
+    } else if (dt?.items?.length) {
+      for (const it of dt.items) {
+        if (it.kind === "file") { file = it.getAsFile(); break; }
+      }
+    }
+    if (!file) return this.toast("No file detected in drop.", "error");
+
     if (!/image\/(jpeg|png)/i.test(file.type)) {
-      this.toast("Unsupported file type. Use JPG or PNG.", "error");
-      return;
+      return this.toast("Unsupported type. Please use JPG or PNG.", "error");
     }
 
-    // Read as base64 then call Apex to create + set current
     const reader = new FileReader();
     reader.onload = async () => {
       try {
-        // result like: data:image/png;base64,AAAA...
         const base64 = String(reader.result).split("base64,").pop();
-
         const res = await createAndSetPhoto({
           recordId: this.recordId,
           fileName: file.name,
@@ -116,11 +93,11 @@ export default class FileUploader extends LightningElement {
         });
 
         if (res && res.versionId) {
-          this.fileUrl = this.makeUrl(res.versionId);
+          this.fileUrl = this.makeUrl(res.versionId);      // instant render after drop
           this.contentDocumentId = res.contentDocumentId;
           this.toast("Photo replaced.", "success");
         } else {
-          this.toast("Upload failed. No result returned.", "error");
+          this.toast("Upload failed. No result.", "error");
         }
       } catch (err) {
         console.error(err);

@@ -1,5 +1,4 @@
 trigger ContentVersionEnforceSingleCurrent on ContentVersion (after insert, after update) {
-    // Collect versions that have just been set to current with the proper description
     Set<Id> turnedOn = new Set<Id>();
     for (ContentVersion cv : Trigger.new) {
         Boolean becameTrue = cv.Is_Currently_Displayed__c == true &&
@@ -10,37 +9,27 @@ trigger ContentVersionEnforceSingleCurrent on ContentVersion (after insert, afte
     }
     if (turnedOn.isEmpty()) return;
 
-    // Map version -> its linked record(s)
-    Map<Id, Set<Id>> versionToEntities = new Map<Id, Set<Id>>();
-    for (ContentDocumentLink link : [
+    // Map turned-on versions to the records they are linked to.
+    Map<Id, Set<Id>> docToEntities = new Map<Id, Set<Id>>();
+    for (ContentDocumentLink l : [
         SELECT ContentDocumentId, LinkedEntityId
         FROM ContentDocumentLink
-        WHERE ContentDocumentId IN (
-            SELECT ContentDocumentId FROM ContentVersion WHERE Id IN :turnedOn
-        )
+        WHERE ContentDocumentId IN (SELECT ContentDocumentId FROM ContentVersion WHERE Id IN :turnedOn)
     ]) {
-        if (!versionToEntities.containsKey(link.ContentDocumentId)) {
-            versionToEntities.put(link.ContentDocumentId, new Set<Id>());
-        }
-        versionToEntities.get(link.ContentDocumentId).add(link.LinkedEntityId);
+        if (!docToEntities.containsKey(l.ContentDocumentId)) docToEntities.put(l.ContentDocumentId, new Set<Id>());
+        docToEntities.get(l.ContentDocumentId).add(l.LinkedEntityId);
     }
-
-    // All entity IDs receiving a "turn on"
     Set<Id> allEntities = new Set<Id>();
-    for (Set<Id> s : versionToEntities.values()) allEntities.addAll(s);
+    for (Set<Id> s : docToEntities.values()) allEntities.addAll(s);
     if (allEntities.isEmpty()) return;
 
-    // All docIds linked to those entities
     Set<Id> allDocIds = new Set<Id>();
     for (ContentDocumentLink l2 : [
         SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId IN :allEntities
-    ]) {
-        allDocIds.add(l2.ContentDocumentId);
-    }
+    ]) allDocIds.add(l2.ContentDocumentId);
     if (allDocIds.isEmpty()) return;
 
-    // Flip off other "current" versions on those entities
-    List<ContentVersion> toUpdate = [
+    List<ContentVersion> toFlipOff = [
         SELECT Id, Is_Currently_Displayed__c
         FROM ContentVersion
         WHERE ContentDocumentId IN :allDocIds
@@ -48,6 +37,6 @@ trigger ContentVersionEnforceSingleCurrent on ContentVersion (after insert, afte
           AND Is_Currently_Displayed__c = TRUE
           AND Id NOT IN :turnedOn
     ];
-    for (ContentVersion cvu : toUpdate) cvu.Is_Currently_Displayed__c = false;
-    if (!toUpdate.isEmpty()) update toUpdate;
+    for (ContentVersion cvu : toFlipOff) cvu.Is_Currently_Displayed__c = false;
+    if (!toFlipOff.isEmpty()) update toFlipOff;
 }

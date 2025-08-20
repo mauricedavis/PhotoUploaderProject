@@ -5,28 +5,18 @@
   max-height: 440px;
   object-fit: contain;
   border-radius: 6px;
+  user-select: none;
+  -webkit-user-drag: none;
 }
-.uploader { padding: 0.75rem; }
+.uploader { padding: .75rem; }
 .hint {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background: rgba(0,0,0,.55);
-  color: #fff;
-  font-size: .75rem;
+  position: absolute; right: 10px; bottom: 10px;
+  padding: 4px 8px; border-radius: 4px;
+  background: rgba(0,0,0,.55); color: #fff; font-size: .75rem;
 }
 .dropMask {
-  position: absolute;
-  inset: 0;
-  border: 2px dashed #1589ee;
+  position: absolute; inset: 0; border: 2px dashed #1589ee;
   background: rgba(21,137,238,.10);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: #015486;
-  border-radius: 6px;
-  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: #015486; border-radius: 6px; z-index: 10;
 }
