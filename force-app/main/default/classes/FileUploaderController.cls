@@ -1,5 +1,7 @@
 public with sharing class FileUploaderController {
+    private static final String RECORD_PHOTO_DESC = 'record photo';
 
+    // Return the current photo (preferred: Is_Currently_Displayed__c=true)
     @AuraEnabled(cacheable=true)
     public static ContentVersion getCurrentPhoto(Id recordId) {
         if (recordId == null) return null;
@@ -14,100 +16,121 @@ public with sharing class FileUploaderController {
         }
         if (docIds.isEmpty()) return null;
 
-        // Prefer explicitly pinned "record photo"
-        List<ContentVersion> pinned = [
+        // Prefer flagged current
+        List<ContentVersion> flagged = [
             SELECT Id, ContentDocumentId
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
+              AND Description = :RECORD_PHOTO_DESC
               AND Is_Currently_Displayed__c = TRUE
-              AND Description = 'record photo'
             ORDER BY LastModifiedDate DESC
             LIMIT 1
         ];
-        if (!pinned.isEmpty()) return pinned[0];
+        if (!flagged.isEmpty()) return flagged[0];
 
-        // Fallback: latest "record photo" even if not pinned
-        List<ContentVersion> fallback = [
+        // Fallback to latest "record photo"
+        List<ContentVersion> latest = [
             SELECT Id, ContentDocumentId
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
-              AND Description = 'record photo'
+              AND Description = :RECORD_PHOTO_DESC
             ORDER BY LastModifiedDate DESC
             LIMIT 1
         ];
-        return fallback.isEmpty() ? null : fallback[0];
+        return latest.isEmpty() ? null : latest[0];
     }
 
+    // Flip off every other "current" for that Account and set target version true
     @AuraEnabled
-    public static void setCurrentPhotoSmart(Id recordId, Id documentId, Id versionId) {
-        if (recordId == null && documentId == null && versionId == null) return;
+    public static void setCurrentPhotoSmart(Id recordId, Id versionId) {
+        if (recordId == null || versionId == null) return;
 
-        // Gather all docs linked to the record so we can unpin them
         Set<Id> docIds = new Set<Id>();
-        if (recordId != null) {
-            for (ContentDocumentLink cdl : [
-                SELECT ContentDocumentId
-                FROM ContentDocumentLink
-                WHERE LinkedEntityId = :recordId
-            ]) {
-                docIds.add(cdl.ContentDocumentId);
-            }
+        for (ContentDocumentLink cdl : [
+            SELECT ContentDocumentId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId = :recordId
+        ]) {
+            docIds.add(cdl.ContentDocumentId);
         }
-        if (documentId != null) {
-            docIds.add(documentId);
+        if (docIds.isEmpty()) return;
+
+        List<ContentVersion> upd = new List<ContentVersion>();
+
+        for (ContentVersion cv : [
+            SELECT Id, Is_Currently_Displayed__c
+            FROM ContentVersion
+            WHERE ContentDocumentId IN :docIds
+              AND Description = :RECORD_PHOTO_DESC
+              AND Is_Currently_Displayed__c = TRUE
+              AND Id != :versionId
+        ]) {
+            cv.Is_Currently_Displayed__c = false;
+            upd.add(cv);
         }
 
-        // Resolve the target version
-        ContentVersion target;
-        if (versionId != null) {
-            List<ContentVersion> tmp = [
-                SELECT Id, ContentDocumentId, Is_Currently_Displayed__c, Description
-                FROM ContentVersion
-                WHERE Id = :versionId
-                LIMIT 1
-            ];
-            if (!tmp.isEmpty()) target = tmp[0];
-        }
-        if (target == null && documentId != null) {
-            List<ContentVersion> latest = [
-                SELECT Id, ContentDocumentId, Is_Currently_Displayed__c, Description
-                FROM ContentVersion
-                WHERE ContentDocumentId = :documentId
-                ORDER BY LastModifiedDate DESC
-                LIMIT 1
-            ];
-            if (!latest.isEmpty()) target = latest[0];
-        }
-        if (target == null) return;
-
-        // Unpin everything else for this record
-        List<ContentVersion> updates = new List<ContentVersion>();
-        if (!docIds.isEmpty()) {
-            for (ContentVersion cv : [
-                SELECT Id, Is_Currently_Displayed__c
-                FROM ContentVersion
-                WHERE ContentDocumentId IN :docIds
-                  AND Is_Currently_Displayed__c = TRUE
-            ]) {
-                cv.Is_Currently_Displayed__c = false;
-                updates.add(cv);
-            }
-        }
-
-        // Pin the chosen version and mark as "record photo"
+        ContentVersion target = [
+            SELECT Id, Is_Currently_Displayed__c, Description
+            FROM ContentVersion
+            WHERE Id = :versionId
+            LIMIT 1
+        ];
         target.Is_Currently_Displayed__c = true;
-        if (target.Description != 'record photo') target.Description = 'record photo';
-        updates.add(target);
+        if (target.Description != RECORD_PHOTO_DESC) target.Description = RECORD_PHOTO_DESC;
+        upd.add(target);
 
-        update updates;
+        if (!upd.isEmpty()) update upd;
     }
-    // --- Back-compat overloads for older LWC bundles ---
-    @AuraEnabled
-    public static void uploadPhotoFromLwc(Id recordId, Id documentId, Id versionId) {
-        setCurrentPhotoSmart(recordId, documentId, versionId);
+
+    public class UploadResult {
+        @AuraEnabled public Id versionId;
+        @AuraEnabled public Id contentDocumentId;
+        @AuraEnabled public String message;
     }
+
+    // Create a new ContentVersion from base64 and make it current
+    // NOTE: ~6 MB limit for synchronous Apex uploads
     @AuraEnabled
-    public static void uploadPhotoFromLwc(Id recordId, Id contentDocumentId) {
-        setCurrentPhotoSmart(recordId, contentDocumentId, null);
+    public static UploadResult createAndSetPhoto(Id recordId, String fileName, String base64Data, String contentType) {
+        if (String.isBlank(base64Data) || recordId == null)
+            throw new AuraHandledException('No file contents or recordId.');
+
+        Blob body = EncodingUtil.base64Decode(base64Data);
+        if (body.size() > 6000000) { // guard for big files
+            throw new AuraHandledException('File too large to upload inline (>6 MB). Please use the Upload Files button.');
+        }
+
+        if (String.isBlank(fileName)) fileName = 'photo.jpg';
+        String title = fileName;
+        Integer dot = fileName.lastIndexOf('.');
+        if (dot > 0) title = fileName.substring(0, dot);
+
+        ContentVersion cv = new ContentVersion(
+            Title = title,
+            PathOnClient = fileName,
+            VersionData = body,
+            IsMajorVersion = true,
+            Description = RECORD_PHOTO_DESC,
+            Is_Currently_Displayed__c = true
+        );
+        insert cv;
+
+        // Get the ContentDocumentId then link it to the record
+        cv = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id];
+        insert new ContentDocumentLink(
+            ContentDocumentId = cv.ContentDocumentId,
+            LinkedEntityId = recordId,
+            ShareType = 'V',
+            Visibility = 'AllUsers'
+        );
+
+        // Enforce single current for that record
+        setCurrentPhotoSmart(recordId, cv.Id);
+
+        UploadResult res = new UploadResult();
+        res.versionId = cv.Id;
+        res.contentDocumentId = cv.ContentDocumentId;
+        res.message = 'Uploaded';
+        return res;
     }
 }

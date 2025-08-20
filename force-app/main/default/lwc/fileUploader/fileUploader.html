@@ -1,22 +1,33 @@
 <template>
   <lightning-card title="Photo Uploader" icon-name="utility:upload">
-    <template if:true={fileUrl}>
-      <div class="frame">
-        <img class="hero" src={fileUrl} alt="Uploaded image" />
-      </div>
-    </template>
+    <div class="wrapper"
+         ondragover={handleDragOver}
+         ondragenter={handleDragEnter}
+         ondragleave={handleDragLeave}
+         ondrop={handleDrop}>
+      <template if:true={fileUrl}>
+        <div class="imgBox">
+          <img src={fileUrl} alt="Uploaded Image" class="uploaded-img"/>
+          <div class="hint">Drop a photo to replace</div>
+        </div>
+      </template>
 
-    <template if:false={fileUrl}>
-      <div class="uploader slds-p-around_medium">
-        <lightning-file-upload
-          label="Upload Photo"
-          name="fileUploader"
-          accept={acceptedFormats}
-          record-id={recordId}
-          multiple={allowMultiple}
-          onuploadfinished={handleUploadFinished}>
-        </lightning-file-upload>
-      </div>
-    </template>
+      <template if:false={fileUrl}>
+        <div class="uploader">
+          <lightning-file-upload
+              label="Upload Photo"
+              name="fileUploader"
+              accept={acceptedFormats}
+              record-id={recordId}
+              onuploadfinished={handleUploadFinished}
+              multiple={false}>
+          </lightning-file-upload>
+        </div>
+      </template>
+
+      <template if:true={isDragging}>
+        <div class="dropMask">Drop to replace</div>
+      </template>
+    </div>
   </lightning-card>
 </template>
