@@ -122,3 +122,8 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Enforce only one **Is Currently Displayed** per Account
 - Optional trigger: keeps rule even when changes happen outside the LWC
 
+## deploy/2025-08-20--1247PM
+- Fix: robust drag-and-drop + enforce single 'Is Currently Displayed' (Apex + trigger); instant render preserved
+- Drag-and-drop now uses DataTransfer **items** or **files**; stopPropagation + dropEffect
+- Enforce one-and-only-one **Is Currently Displayed** per Account (Apex + Trigger)
+- Instant render preserved for both Upload button and drop
