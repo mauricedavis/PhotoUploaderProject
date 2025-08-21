@@ -137,3 +137,9 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - Keep ONE @AuraEnabled back-compat method: uploadPhotoFromLwc(recordId, contentDocumentId)
 - Remove method overload (Apex disallows @AuraEnabled overloading)
 - LWC: replace any literal {false} with getter allowMultiple; fix template error
+## deploy/2025-08-21--0641PM
+- Drag&Drop (base64) replace + instant render; enforce single 'Is Currently Displayed' on all paths; trigger retained
+- LWC: true drop zone (FileReader -> base64 -> Apex createAndSetPhoto); instant render
+- LWC: native Upload button path enforces single-current; falls back to uploadPhotoFromLwc if versionId missing
+- Apex: createAndSetPhoto + setCurrentPhotoSmart ensure only one current; back-compat method preserved
+- Trigger: keeps invariant when Files are edited outside the LWC

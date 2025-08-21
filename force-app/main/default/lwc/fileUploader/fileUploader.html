@@ -1,32 +1,37 @@
 <template>
   <lightning-card title="Photo Uploader" icon-name="utility:upload">
-    <!-- Show image with invisible overlay-uploader on top for drop/click replace -->
-    <template if:true={fileUrl}>
-      <div class="img-wrap">
-        <img src={fileUrl} class="uploaded-img" alt="Uploaded photo" />
-        <div class="hint">Drop a photo to replace</div>
-        <lightning-file-upload
-          class="overlay-uploader"
-          record-id={recordId}
-          accept={acceptedFormats}
-          multiple={allowMultiple}
-          onuploadfinished={handleUploadFinished}>
-        </lightning-file-upload>
-      </div>
-    </template>
+    <div class="wrap">
+      <!-- IMAGE + DROP ZONE -->
+      <template if:true={fileUrl}>
+        <div class="imgBox"
+             ondragover={handleDragOver}
+             ondragenter={handleDragEnter}
+             ondragleave={handleDragLeave}
+             ondrop={handleDrop}>
+          <img src={fileUrl} alt="Photo" class="uploaded-img"/>
 
-    <!-- No image: show standard uploader -->
-    <template if:false={fileUrl}>
-      <div class="uploader-slot">
-        <lightning-file-upload
-          label="Upload Photo"
-          name="fileUploader"
-          accept={acceptedFormats}
-          record-id={recordId}
-          onuploadfinished={handleUploadFinished}
-          multiple={allowMultiple}>
-        </lightning-file-upload>
-      </div>
-    </template>
+          <!-- Visual cue while dragging -->
+          <template if:true={isDragging}>
+            <div class="dropMask">Drop to replace</div>
+          </template>
+
+          <div class="hint">Drop a photo to replace</div>
+        </div>
+      </template>
+
+      <!-- INITIAL UPLOAD (no image yet) -->
+      <template if:false={fileUrl}>
+        <div class="uploader">
+          <lightning-file-upload
+            label="Upload Photo"
+            name="fileUploader"
+            accept={acceptedFormats}
+            multiple={allowMultiple}
+            record-id={recordId}
+            onuploadfinished={handleUploadFinished}>
+          </lightning-file-upload>
+        </div>
+      </template>
+    </div>
   </lightning-card>
 </template>

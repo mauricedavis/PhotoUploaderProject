@@ -35,7 +35,7 @@ public with sharing class FileUploaderController {
         return latest.isEmpty() ? null : latest[0];
     }
 
-    // Explicitly enforce single current every time
+    // Flip OFF all others for this Account and set the provided version ON
     @AuraEnabled
     public static void setCurrentPhotoSmart(Id recordId, Id versionId) {
         if (recordId == null || versionId == null) return;
@@ -50,7 +50,6 @@ public with sharing class FileUploaderController {
 
         List<ContentVersion> updates = new List<ContentVersion>();
 
-        // Turn OFF other current record photos
         for (ContentVersion other : [
             SELECT Id, Is_Currently_Displayed__c
             FROM ContentVersion
@@ -58,9 +57,11 @@ public with sharing class FileUploaderController {
               AND Description = :RECORD_PHOTO_DESC
               AND Is_Currently_Displayed__c = TRUE
               AND Id != :versionId
-        ]) { other.Is_Currently_Displayed__c = false; updates.add(other); }
+        ]) {
+            other.Is_Currently_Displayed__c = false;
+            updates.add(other);
+        }
 
-        // Turn ON the chosen one
         ContentVersion target = [
             SELECT Id, ContentDocumentId, Is_Currently_Displayed__c, Description
             FROM ContentVersion
@@ -80,6 +81,7 @@ public with sharing class FileUploaderController {
         @AuraEnabled public String message;
     }
 
+    // Create version from base64, link to record, enforce single-current
     @AuraEnabled
     public static UploadResult createAndSetPhoto(Id recordId, String fileName, String base64Data, String contentType) {
         if (recordId == null || String.isBlank(base64Data))
@@ -104,8 +106,8 @@ public with sharing class FileUploaderController {
         );
         insert cv;
 
+        // Link document to the record
         cv = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id];
-
         insert new ContentDocumentLink(
             ContentDocumentId = cv.ContentDocumentId,
             LinkedEntityId    = recordId,
@@ -113,7 +115,7 @@ public with sharing class FileUploaderController {
             Visibility        = 'AllUsers'
         );
 
-        // Enforce single current
+        // Enforce single-current
         setCurrentPhotoSmart(recordId, cv.Id);
 
         UploadResult res = new UploadResult();
@@ -123,11 +125,10 @@ public with sharing class FileUploaderController {
         return res;
     }
 
-    // ---- Back-compat: keep ONE AuraEnabled method named uploadPhotoFromLwc (no overloads) ----
+    // Back-compat: single AuraEnabled method name; resolve latest version then enforce
     @AuraEnabled
     public static void uploadPhotoFromLwc(Id recordId, Id contentDocumentId) {
         if (recordId == null || contentDocumentId == null) return;
-        // Resolve latest version of that document
         List<ContentVersion> latest = [
             SELECT Id
             FROM ContentVersion

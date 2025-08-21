@@ -1,5 +1,16 @@
-.img-wrap { position: relative; padding: 0.25rem; }
-.uploaded-img { display:block; width:100%; max-height:420px; object-fit:cover; border-radius:8px; }
-.hint { position:absolute; right:.5rem; bottom:.5rem; padding:.25rem .5rem; background:rgba(0,0,0,.55); color:#fff; font-size:.75rem; border-radius:4px; pointer-events:none; }
-.overlay-uploader { position:absolute; inset:0; opacity:0; z-index:10; }
-.uploader-slot { padding:1rem; }
+.wrap { position: relative; }
+.imgBox { position: relative; border-radius: 6px; }
+.uploaded-img {
+  display:block; width:100%; max-height:440px; object-fit:contain; border-radius:6px;
+  user-select:none; -webkit-user-drag:none;
+}
+.uploader { padding: .75rem; }
+.hint {
+  position:absolute; right:10px; bottom:10px; background:rgba(0,0,0,.55);
+  color:#fff; font-size:.75rem; padding:4px 8px; border-radius:4px; pointer-events:none;
+}
+.dropMask {
+  position:absolute; inset:0; border:2px dashed #1589ee; background:rgba(21,137,238,.12);
+  display:flex; align-items:center; justify-content:center;
+  color:#015486; font-weight:700; border-radius:6px; z-index:10;
+}
