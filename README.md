@@ -132,3 +132,8 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - setCurrentPhotoSmart(): flips OFF other current 'record photo' versions, sets target ON
 - createAndSetPhoto(): creates version, links to record, then calls setCurrentPhotoSmart()
 - Back-compat wrappers preserved for older LWC bundles
+## deploy/2025-08-21--1021AM
+- Fix: remove @AuraEnabled overload + LWC literal {false}; keep single-current enforcement
+- Keep ONE @AuraEnabled back-compat method: uploadPhotoFromLwc(recordId, contentDocumentId)
+- Remove method overload (Apex disallows @AuraEnabled overloading)
+- LWC: replace any literal {false} with getter allowMultiple; fix template error
