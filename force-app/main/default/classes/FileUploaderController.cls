@@ -1,143 +1,129 @@
 public with sharing class FileUploaderController {
-    private static final String RECORD_PHOTO_DESC = 'record photo';
 
+    public class PhotoInfo {
+        @AuraEnabled public Id   Id;
+        @AuraEnabled public Id   ContentDocumentId;
+        @AuraEnabled public String FileType;
+    }
+
+    // Returns the single currently-displayed "record photo" if any
     @AuraEnabled(cacheable=true)
     public static ContentVersion getCurrentPhoto(Id recordId) {
         if (recordId == null) return null;
 
+        // Find all docs linked to record
         Set<Id> docIds = new Set<Id>();
         for (ContentDocumentLink cdl : [
             SELECT ContentDocumentId
             FROM ContentDocumentLink
             WHERE LinkedEntityId = :recordId
-        ]) docIds.add(cdl.ContentDocumentId);
+        ]) {
+            docIds.add(cdl.ContentDocumentId);
+        }
         if (docIds.isEmpty()) return null;
 
+        // Prefer the flagged current
         List<ContentVersion> flagged = [
-            SELECT Id, ContentDocumentId
+            SELECT Id, ContentDocumentId, FileType
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
-              AND Description = :RECORD_PHOTO_DESC
+              AND Description = 'record photo'
               AND Is_Currently_Displayed__c = TRUE
             ORDER BY LastModifiedDate DESC
             LIMIT 1
         ];
         if (!flagged.isEmpty()) return flagged[0];
 
-        List<ContentVersion> latest = [
-            SELECT Id, ContentDocumentId
+        // Fallback to latest "record photo"
+        List<ContentVersion> fallback = [
+            SELECT Id, ContentDocumentId, FileType
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
-              AND Description = :RECORD_PHOTO_DESC
+              AND Description = 'record photo'
             ORDER BY LastModifiedDate DESC
             LIMIT 1
         ];
-        return latest.isEmpty() ? null : latest[0];
+        return fallback.isEmpty() ? null : fallback[0];
     }
 
-    // Flip OFF all others for this Account and set the provided version ON
+    // Uploads content bytes and strictly enforces "only one current" per record
     @AuraEnabled
-    public static void setCurrentPhotoSmart(Id recordId, Id versionId) {
-        if (recordId == null || versionId == null) return;
+    public static PhotoInfo uploadPhotoFromLwc(
+        Id recordId,
+        String fileName,
+        String base64Data,
+        String contentType
+    ) {
+        if (recordId == null || String.isBlank(base64Data)) {
+            throw new AuraHandledException('Missing recordId or data');
+        }
 
+        // Create new ContentVersion (auto-creates ContentDocument)
+        Blob body = EncodingUtil.base64Decode(base64Data);
+        ContentVersion cv = new ContentVersion();
+        cv.Title          = (String.isBlank(fileName) ? 'photo' : fileName);
+        cv.PathOnClient   = (String.isBlank(fileName) ? 'photo' : fileName);
+        cv.VersionData    = body;
+        cv.Description    = 'record photo';
+        if (!String.isBlank(contentType)) cv.FileType = fileTypeFromMime(contentType);
+        insert cv;
+
+        // Link to the record
+        Id docId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId;
+        upsert new ContentDocumentLink(
+            LinkedEntityId = recordId,
+            ContentDocumentId = docId,
+            ShareType = 'V'
+        );
+
+        // Enforce single-current: clear all true flags then set this one true
+        enforceSingleCurrent(recordId, cv.Id);
+
+        // Return info used by the LWC to decide <img> vs <iframe>
+        ContentVersion cv2 = [SELECT Id, FileType FROM ContentVersion WHERE Id = :cv.Id];
+        PhotoInfo info = new PhotoInfo();
+        info.Id = cv2.Id;
+        info.ContentDocumentId = docId;
+        info.FileType = cv2.FileType;
+        return info;
+    }
+
+    private static void enforceSingleCurrent(Id recordId, Id newVersionId) {
         Set<Id> docIds = new Set<Id>();
         for (ContentDocumentLink cdl : [
             SELECT ContentDocumentId
             FROM ContentDocumentLink
             WHERE LinkedEntityId = :recordId
-        ]) docIds.add(cdl.ContentDocumentId);
+        ]) {
+            docIds.add(cdl.ContentDocumentId);
+        }
         if (docIds.isEmpty()) return;
 
-        List<ContentVersion> updates = new List<ContentVersion>();
-
+        List<ContentVersion> toUpdate = new List<ContentVersion>();
         for (ContentVersion other : [
             SELECT Id, Is_Currently_Displayed__c
             FROM ContentVersion
             WHERE ContentDocumentId IN :docIds
-              AND Description = :RECORD_PHOTO_DESC
+              AND Description = 'record photo'
               AND Is_Currently_Displayed__c = TRUE
-              AND Id != :versionId
+              AND Id != :newVersionId
         ]) {
             other.Is_Currently_Displayed__c = false;
-            updates.add(other);
+            toUpdate.add(other);
         }
+        if (!toUpdate.isEmpty()) update toUpdate;
 
-        ContentVersion target = [
-            SELECT Id, ContentDocumentId, Is_Currently_Displayed__c, Description
-            FROM ContentVersion
-            WHERE Id = :versionId
-            LIMIT 1
-        ];
-        if (target.Description != RECORD_PHOTO_DESC) target.Description = RECORD_PHOTO_DESC;
-        target.Is_Currently_Displayed__c = true;
-        updates.add(target);
-
-        if (!updates.isEmpty()) update updates;
+        ContentVersion makeCurrent = [SELECT Id, Is_Currently_Displayed__c FROM ContentVersion WHERE Id = :newVersionId LIMIT 1];
+        makeCurrent.Is_Currently_Displayed__c = true;
+        update makeCurrent;
     }
 
-    public class UploadResult {
-        @AuraEnabled public Id versionId;
-        @AuraEnabled public Id contentDocumentId;
-        @AuraEnabled public String message;
-    }
-
-    // Create version from base64, link to record, enforce single-current
-    @AuraEnabled
-    public static UploadResult createAndSetPhoto(Id recordId, String fileName, String base64Data, String contentType) {
-        if (recordId == null || String.isBlank(base64Data))
-            throw new AuraHandledException('Missing recordId or file data.');
-
-        Blob body = EncodingUtil.base64Decode(base64Data);
-        if (body.size() > 6000000)
-            throw new AuraHandledException('File too large for inline upload (>6 MB). Please use the Upload Files button.');
-
-        if (String.isBlank(fileName)) fileName = 'photo.jpg';
-        String title = fileName;
-        Integer dot = fileName.lastIndexOf('.');
-        if (dot > 0) title = fileName.substring(0, dot);
-
-        ContentVersion cv = new ContentVersion(
-            Title = title,
-            PathOnClient = fileName,
-            VersionData = body,
-            IsMajorVersion = true,
-            Description = RECORD_PHOTO_DESC,
-            Is_Currently_Displayed__c = true
-        );
-        insert cv;
-
-        // Link document to the record
-        cv = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id];
-        insert new ContentDocumentLink(
-            ContentDocumentId = cv.ContentDocumentId,
-            LinkedEntityId    = recordId,
-            ShareType         = 'V',
-            Visibility        = 'AllUsers'
-        );
-
-        // Enforce single-current
-        setCurrentPhotoSmart(recordId, cv.Id);
-
-        UploadResult res = new UploadResult();
-        res.versionId = cv.Id;
-        res.contentDocumentId = cv.ContentDocumentId;
-        res.message = 'Uploaded';
-        return res;
-    }
-
-    // Back-compat: single AuraEnabled method name; resolve latest version then enforce
-    @AuraEnabled
-    public static void uploadPhotoFromLwc(Id recordId, Id contentDocumentId) {
-        if (recordId == null || contentDocumentId == null) return;
-        List<ContentVersion> latest = [
-            SELECT Id
-            FROM ContentVersion
-            WHERE ContentDocumentId = :contentDocumentId
-            ORDER BY LastModifiedDate DESC
-            LIMIT 1
-        ];
-        if (!latest.isEmpty()) {
-            setCurrentPhotoSmart(recordId, latest[0].Id);
-        }
+    // Map MIME -> FileType field (optional; keeps FileType tidy)
+    private static String fileTypeFromMime(String mime) {
+        String m = mime == null ? '' : mime.toLowerCase();
+        if (m.contains('png'))  return 'PNG';
+        if (m.contains('jpeg') || m.contains('jpg')) return 'JPG';
+        if (m.contains('pdf'))  return 'PDF';
+        return null;
     }
 }

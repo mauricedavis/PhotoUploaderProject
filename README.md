@@ -147,3 +147,10 @@ The `sfdx-project.json` file contains useful configuration information for your 
 ### 2025-09-02--1132AM – HEIC support added
 - Drag & drop .heic converts to .jpg and uploads immediately.
 
+
+### 2025-09-02--1258PM
+- Add PDF preview (inline iframe) and accept .pdf uploads; Client-side HEIC?JPEG conversion using heic2any static resource; Drag-and-drop to replace current image; Enforce single 'Is Currently Displayed' on every upload (Apex + safety trigger); Instant render after upload; no page refresh
+
+
+## 2025-09-02--0119PM
+- LWC: HEIC?JPEG, drag-n-drop replace, instant render; Apex: single-current enforcement; heic2any SR; PDF preview; log 2025-09-02--0119PM

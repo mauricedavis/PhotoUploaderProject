@@ -1,37 +1,30 @@
 <template>
     <lightning-card title="Photo Uploader" icon-name="utility:upload">
-        <!-- Show image if we have one -->
+        <!-- When a file is already selected/displayed -->
         <template if:true={fileUrl}>
-            <div class="frame">
-                <img class="photo" src={fileUrl} alt="Record photo"/>
-
-                <!-- Drop zone overlay (heic only) -->
-                <div class="dropZone"
-                     ondragover={handleDragOver}
-                     ondrop={handleDrop}>
-                    Drop a HEIC photo to replace
-                </div>
+            <div class="canvas" ondragover={handleDragOver} ondrop={handleDrop}>
+                <template if:true={isPdf}>
+                    <iframe class="doc-frame" src={fileUrl} title="PDF document"></iframe>
+                </template>
+                <template if:false={isPdf}>
+                    <img class="image" src={fileUrl} alt="Uploaded image"/>
+                </template>
+                <div class="hint">Drop a photo to replace</div>
             </div>
         </template>
 
-        <!-- Else show uploader -->
+        <!-- When nothing selected -->
         <template if:false={fileUrl}>
             <div class="uploader">
-                <lightning-file-upload
-                    label="Upload Photo"
-                    name="fileUploader"
-                    accept={acceptedFormats}
-                    record-id={recordId}
-                    multiple={allowMultiple}
-                    onuploadfinished={handleUploadFinished}>
-                </lightning-file-upload>
-
-                <!-- also support drag/drop when no current photo -->
-                <div class="dropHint"
-                     ondragover={handleDragOver}
-                     ondrop={handleDrop}>
-                    or drop a HEIC file here
-                </div>
+                <label class="btn">
+                    Upload Photo
+                    <input class="hidden-file"
+                           type="file"
+                           accept=".jpg,.jpeg,.png,.heic,.pdf"
+                           onchange={handleFilePick}/>
+                </label>
+                <span class="or">Or drop files</span>
+                <div class="dropzone" ondragover={handleDragOver} ondrop={handleDrop}></div>
             </div>
         </template>
     </lightning-card>
