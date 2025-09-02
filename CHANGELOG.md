@@ -11,3 +11,8 @@
 
 ## 2025-09-02--0119PM
 - LWC: HEIC?JPEG, drag-n-drop replace, instant render; Apex: single-current enforcement; heic2any SR; PDF preview; log 2025-09-02--0119PM
+### 2025-09-02--0218PM
+- Add configurable max file size guard (default 12 MB) to Photo Uploader
+- Pre-validate in picker & drag-and-drop before upload
+- Instant render preserved via Apex route
+
