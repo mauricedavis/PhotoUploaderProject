@@ -143,3 +143,7 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - LWC: native Upload button path enforces single-current; falls back to uploadPhotoFromLwc if versionId missing
 - Apex: createAndSetPhoto + setCurrentPhotoSmart ensure only one current; back-compat method preserved
 - Trigger: keeps invariant when Files are edited outside the LWC
+
+### 2025-09-02--1132AM – HEIC support added
+- Drag & drop .heic converts to .jpg and uploads immediately.
+

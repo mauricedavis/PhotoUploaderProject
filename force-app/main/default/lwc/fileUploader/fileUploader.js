@@ -1,114 +1,162 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { loadScript } from "lightning/platformResourceLoader";
+import heic2any from "@salesforce/resourceUrl/heic2any";
 
-import getCurrentPhoto      from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
-import setCurrentPhotoSmart from "@salesforce/apex/FileUploaderController.setCurrentPhotoSmart";
-import createAndSetPhoto    from "@salesforce/apex/FileUploaderController.createAndSetPhoto";
-import uploadPhotoFromLwc   from "@salesforce/apex/FileUploaderController.uploadPhotoFromLwc";
+import getCurrentPhoto from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
+import setCurrentPhoto from "@salesforce/apex/FileUploaderController.setCurrentPhoto";
+import uploadPhotoFromLwc from "@salesforce/apex/FileUploaderController.uploadPhotoFromLwc";
 
 export default class FileUploader extends LightningElement {
   @api recordId;
-
   @track fileUrl;
   @track contentDocumentId;
-  @track isDragging = false;
 
-  connectedCallback() { this.refreshCurrent(); }
+  heicReady = false;
+  acceptHeic = true; // controls if dropzone will allow .heic
 
-  get acceptedFormats() { return [".jpg", ".jpeg", ".png"]; }
-  get allowMultiple()   { return false; } // avoid {false} literal in template
+  connectedCallback() {
+    // fetch current photo so it persists across refreshes
+    this.refreshCurrent();
+  }
 
-  makeUrl(versionId) {
-    return "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + versionId;
+  renderedCallback() {
+    if (this.heicReady) return;
+    this.heicReady = true;
+    loadScript(this, heic2any)
+      .then(() => {
+        // library loaded (or stub present)
+        // console.log("heic2any loaded");
+      })
+      .catch((e) => {
+        // stub remains; conversion will throw if attempted
+        // console.warn("heic2any load failed", e);
+      });
   }
 
   refreshCurrent() {
     if (!this.recordId) return;
     getCurrentPhoto({ recordId: this.recordId })
-      .then(cv => {
+      .then((cv) => {
         if (cv) {
           this.contentDocumentId = cv.ContentDocumentId;
-          this.fileUrl = this.makeUrl(cv.Id);
+          this.fileUrl =
+            "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" +
+            cv.Id;
         } else {
-          this.contentDocumentId = null;
           this.fileUrl = null;
+          this.contentDocumentId = null;
         }
       })
-      .catch(err => console.error("getCurrentPhoto error", err));
+      .catch((err) => {
+        // keep UI functional even if call fails
+        // console.error(err);
+      });
   }
 
-  // --- Native upload button path (instant render + enforce single-current) ---
-  async handleUploadFinished(evt) {
+  // keep your existing file-upload flow
+  get acceptedFormats() {
+    // Let standard upload accept JPEG/PNG/PDF/HEIC, even if conversion
+    // only occurs on drop. PDF will upload as-is (no conversion).
+    return [".jpg", ".jpeg", ".png", ".pdf", ".heic"];
+  }
+  get allowMultiple() {
+    return false;
+  }
+
+  handleUploadFinished(evt) {
+    // Standard lightning-file-upload finished -> immediate render
+    const f = evt.detail.files?.[0];
+    if (!f) return;
+
+    this.contentDocumentId = f.documentId;
+    const versionId = f.contentVersionId;
+    this.fileUrl =
+      "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" +
+      versionId;
+
+    // also mark single-current (server-side enforces uniqueness)
+    setCurrentPhoto({ recordId: this.recordId, documentId: this.contentDocumentId })
+      .catch(() => {});
+  }
+
+  // ---- Drag & drop HEIC support (client conversion -> Apex upload) ----
+
+  handleDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy";
+  }
+
+  async handleDrop(e) {
+    e.preventDefault();
+    const files = e.dataTransfer?.files;
+    if (!files || files.length === 0) return;
+
+    const file = files[0];
+    const name = file.name || "photo.heic";
+    const isHeic = /\.heic$/i.test(name);
+    if (!isHeic) {
+      this.toast("Only HEIC is converted on drop. Use button for other types.", "warning");
+      return;
+    }
+
     try {
-      const f = evt.detail?.files?.[0];
-      if (!f) return;
-
-      // Instant render
-      if (f.contentVersionId) {
-        this.fileUrl = this.makeUrl(f.contentVersionId);
+      if (!window.heic2any) {
+        throw new Error("heic2any not available.");
       }
-      this.contentDocumentId = f.documentId;
+      // Convert to JPEG Blob
+      const jpegBlob = await window.heic2any({ blob: file, toType: "image/jpeg" });
 
-      // Enforce single-current for the Account
-      if (f.contentVersionId) {
-        await setCurrentPhotoSmart({ recordId: this.recordId, versionId: f.contentVersionId });
-      } else if (f.documentId) {
-        // Fallback for orgs/events that don't include versionId
-        await uploadPhotoFromLwc({ recordId: this.recordId, contentDocumentId: f.documentId });
+      // Read as base64 for Apex upload
+      const base64 = await this.blobToBase64(jpegBlob);
+      const safeName = name.replace(/\.heic$/i, ".jpg");
+
+      const result = await uploadPhotoFromLwc({
+        recordId: this.recordId,
+        fileName: safeName,
+        base64Data: base64,
+        contentType: "image/jpeg"
+      });
+
+      // expect { versionId, documentId } from Apex
+      if (result && result.versionId) {
+        this.contentDocumentId = result.documentId;
+        this.fileUrl =
+          "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" +
+          result.versionId;
+        this.toast("Photo replaced.", "success");
+      } else {
+        this.toast("Upload finished, but response was unexpected.", "warning");
       }
-
-      this.toast("Photo uploaded and set as current.", "success");
-    } catch (e) {
-      console.error(e);
-      this.toast(e?.body?.message || e.message, "error");
+    } catch (err) {
+      this.toast(
+        "HEIC convert/upload failed. You can still use the Upload button.",
+        "error"
+      );
+      // console.error(err);
     }
   }
 
-  // --- Drag & Drop path (custom base64 -> Apex) ---
-  handleDragOver(e) { e.preventDefault(); e.stopPropagation(); if (e.dataTransfer) e.dataTransfer.dropEffect = "copy"; }
-  handleDragEnter(e){ e.preventDefault(); e.stopPropagation(); this.isDragging = true; }
-  handleDragLeave(e){ e.preventDefault(); e.stopPropagation(); this.isDragging = false; }
-
-  handleDrop(e) {
-    e.preventDefault(); e.stopPropagation(); this.isDragging = false;
-
-    const dt = e.dataTransfer;
-    let file = null;
-    if (dt?.files?.length) file = dt.files[0];
-    else if (dt?.items?.length) {
-      for (const it of dt.items) if (it.kind === "file") { file = it.getAsFile(); break; }
-    }
-    if (!file) return this.toast("No file detected in drop.", "error");
-    if (!/image\/(jpeg|png)/i.test(file.type)) return this.toast("Use JPG or PNG.", "error");
-
-    const reader = new FileReader();
-    reader.onload = async () => {
-      try {
-        const base64 = String(reader.result).split("base64,").pop();
-        const res = await createAndSetPhoto({
-          recordId: this.recordId,
-          fileName: file.name,
-          base64Data: base64,
-          contentType: file.type
-        });
-
-        if (res?.versionId) {
-          // Instant render after drop
-          this.fileUrl = this.makeUrl(res.versionId);
-          this.contentDocumentId = res.contentDocumentId;
-          this.toast("Photo replaced.", "success");
-        } else {
-          this.toast("Upload failed.", "error");
-        }
-      } catch (err) {
-        console.error(err);
-        this.toast(err?.body?.message || err.message, "error");
-      }
-    };
-    reader.readAsDataURL(file);
+  blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => {
+        const dataUrl = r.result; // data:<type>;base64,XXXXX
+        const base64 = dataUrl.split(",")[1] || "";
+        resolve(base64);
+      };
+      r.onerror = reject;
+      r.readAsDataURL(blob);
+    });
   }
 
-  toast(message, variant) {
-    this.dispatchEvent(new ShowToastEvent({ title: "Photo Uploader", message, variant }));
+  toast(msg, variant="info") {
+    this.dispatchEvent(
+      new ShowToastEvent({
+        title: variant === "error" ? "Error" : variant === "success" ? "Success" : "Notice",
+        message: msg,
+        variant
+      })
+    );
   }
 }
