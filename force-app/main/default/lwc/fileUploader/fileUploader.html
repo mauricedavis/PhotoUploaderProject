@@ -1,31 +1,27 @@
 <template>
     <lightning-card title="Photo Uploader" icon-name="utility:upload">
-        <!-- When a file is already selected/displayed -->
-        <template if:true={fileUrl}>
-            <div class="canvas" ondragover={handleDragOver} ondrop={handleDrop}>
-                <template if:true={isPdf}>
-                    <iframe class="doc-frame" src={fileUrl} title="PDF document"></iframe>
-                </template>
-                <template if:false={isPdf}>
-                    <img class="image" src={fileUrl} alt="Uploaded image"/>
-                </template>
-                <div class="hint">Drop a photo to replace</div>
-            </div>
-        </template>
+        <div class="drop-zone" ondragover={handleDragOver} ondrop={handleDrop}>
+            <template if:true={fileUrl}>
+                <img class="preview" src={fileUrl} alt="Current image" />
+                <span class="hint">Drop a photo to replace</span>
+            </template>
 
-        <!-- When nothing selected -->
-        <template if:false={fileUrl}>
-            <div class="uploader">
-                <label class="btn">
-                    Upload Photo
-                    <input class="hidden-file"
-                           type="file"
-                           accept=".jpg,.jpeg,.png,.heic,.pdf"
-                           onchange={handleFilePick}/>
-                </label>
-                <span class="or">Or drop files</span>
-                <div class="dropzone" ondragover={handleDragOver} ondrop={handleDrop}></div>
-            </div>
-        </template>
+            <template if:false={fileUrl}>
+                <div class="empty">
+                    <p>Upload Photo</p>
+                    <div class="pick">
+                        <lightning-button label="Select File" onclick={openPicker}></lightning-button>
+                        <span class="or">Or drop files</span>
+                    </div>
+                </div>
+            </template>
+
+            <input
+                class="hidden-input"
+                type="file"
+                accept={acceptString}
+                onchange={handleFilePicked}
+            />
+        </div>
     </lightning-card>
 </template>

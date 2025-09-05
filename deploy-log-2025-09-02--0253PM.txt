@@ -1,0 +1,12 @@
+﻿{
+  "name": "LibraryError",
+  "message": "A StaticResource directory must have a content type of application/zip or application/jar - found application/javascript for heic2any.",
+  "exitCode": 1,
+  "context": "DeployMetadata",
+  "stack": "LibraryError: A StaticResource directory must have a content type of application/zip or application/jar - found application/javascript for heic2any.\n    at SfCommandError.from (file:///C:/Users/MauriceJDavis/AppData/Local/sf/client/2.90.4-1709262/node_modules/@salesforce/sf-plugins-core/lib/SfCommandError.js:39:16)\n    at DeployMetadata.catch (file:///C:/Users/MauriceJDavis/AppData/Local/sf/client/2.90.4-1709262/node_modules/@salesforce/sf-plugins-core/lib/sfCommand.js:323:47)\n    at DeployMetadata.catch (file:///C:/Users/MauriceJDavis/AppData/Local/sf/client/2.90.4-1709262/node_modules/@salesforce/plugin-deploy-retrieve/lib/commands/project/deploy/start.js:272:27)\n    at DeployMetadata._run (C:\\Users\\MauriceJDavis\\AppData\\Local\\sf\\client\\2.90.4-1709262\\node_modules\\@oclif\\core\\lib\\command.js:185:29)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Config.runCommand (C:\\Users\\MauriceJDavis\\AppData\\Local\\sf\\client\\2.90.4-1709262\\node_modules\\@oclif\\core\\lib\\config\\config.js:456:25)\n    at async run (C:\\Users\\MauriceJDavis\\AppData\\Local\\sf\\client\\2.90.4-1709262\\node_modules\\@oclif\\core\\lib\\main.js:96:16)\n    at async file:///C:/Users/MauriceJDavis/AppData/Local/sf/client/2.90.4-1709262/bin/run.js:15:1",
+  "cause": "undefined",
+  "warnings": [],
+  "code": "LibraryError",
+  "status": 1,
+  "commandName": "DeployMetadata"
+}

@@ -2,129 +2,167 @@ import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import getCurrentPhoto from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
 import uploadPhotoFromLwc from "@salesforce/apex/FileUploaderController.uploadPhotoFromLwc";
-import Heic2any from "@salesforce/resourceUrl/heic2any";
-import { loadScript } from "lightning/platformResourceLoader";
+import setCurrentPhoto from "@salesforce/apex/FileUploaderController.setCurrentPhoto";
 
 export default class FileUploader extends LightningElement {
     @api recordId;
+    /** admin-configurable in App Builder; default 12 */
+    @api maxFileSizeMb = 12;
+
     @track fileUrl;
-    @track isPdf = false;
-    heicLoaded = false;
+    @track contentDocumentId;
+
+    get acceptString() {
+        return ".jpg,.jpeg,.png,.heic,.pdf";
+    }
 
     connectedCallback() {
-        this.refreshCurrent();
+        this.loadCurrent();
     }
 
-    renderedCallback() {
-        if (!this.heicLoaded) {
-            this.heicLoaded = true;
-            loadScript(this, Heic2any + "/heic2any.min.js").catch(() => {
-                // If the static resource is missing we just proceed without HEIC conversion
-                this.heicLoaded = false;
-            });
-        }
-    }
-
-    refreshCurrent() {
+    loadCurrent() {
+        if (!this.recordId) return;
         getCurrentPhoto({ recordId: this.recordId })
             .then(cv => {
                 if (cv) {
-                    this.isPdf = (cv.FileType === "PDF");
-                    // Use direct version download so <img> and <iframe> both work
-                    this.fileUrl = "/sfc/servlet.shepherd/version/download/" + cv.Id;
+                    this.contentDocumentId = cv.ContentDocumentId;
+                    this.fileUrl =
+                        "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + cv.Id;
                 } else {
+                    this.contentDocumentId = null;
                     this.fileUrl = null;
-                    this.isPdf = false;
                 }
             })
-            .catch(err => {
-                // Ignore if first load; show a console only
-                // eslint-disable-next-line no-console
-                console.error(err);
-            });
+            .catch(e => console.error("getCurrentPhoto", e));
     }
 
-    // ------------- UI events -------------
-    handleFilePick(evt) {
-        const file = evt.target.files && evt.target.files[0];
-        if (file) this.processAndUpload(file);
-        evt.target.value = "";
+    openPicker() {
+        this.template.querySelector("input[type=file]").click();
     }
     handleDragOver(evt) {
         evt.preventDefault();
+        evt.dataTransfer.dropEffect = "copy";
     }
     handleDrop(evt) {
         evt.preventDefault();
-        const file = evt.dataTransfer && evt.dataTransfer.files && evt.dataTransfer.files[0];
-        if (file) this.processAndUpload(file);
+        const f = evt.dataTransfer?.files?.[0];
+        if (f) this.processIncomingFile(f);
+    }
+    handleFilePicked(evt) {
+        const f = evt.target.files?.[0];
+        if (f) this.processIncomingFile(f);
+        evt.target.value = "";
     }
 
-    // ------------- Core -------------
-    async processAndUpload(file) {
+    async processIncomingFile(file) {
+        const maxBytes = this.maxBytes;
+        // 1) block on original size
+        if (this.hasSize(file) && file.size > maxBytes) {
+            this.toast("Photo Uploader", `Max file size is ${this.maxFileSizeMb} MB.`, "error");
+            return;
+        }
+
+        let workFile = file;
+        const nameLower = (file.name || "").toLowerCase();
+        const typeLower = (file.type || "").toLowerCase();
+        const isHeic = typeLower.includes("heic") || nameLower.endsWith(".heic");
+        const isPdf  = typeLower.includes("pdf")  || nameLower.endsWith(".pdf");
+
         try {
-            let blob = file;
-            let name = file.name;
-            const lower = name.toLowerCase();
-
-            // HEIC -> JPEG (if heic2any is present)
-            if (lower.endsWith(".heic") && window.heic2any) {
-                const converted = await window.heic2any({ blob: file, toType: "image/jpeg" });
-                blob = converted instanceof Blob ? converted : converted[0];
-                name = name.replace(/\.heic$/i, ".jpg");
+            if (isHeic) {
+                await this.ensureHeic2Any();
+                if (typeof window.heic2any !== "function") throw new Error("HEIC converter unavailable.");
+                const blob = await window.heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 });
+                workFile = new File([blob], file.name.replace(/\.heic$/i, ".jpg"), { type: "image/jpeg" });
+            } else if (isPdf) {
+                workFile = await this.pdfFirstPageToJpeg(file);
             }
-
-            // We read as base64 and send it to Apex; Apex enforces single-current flag
-            const base64 = await this.readAsBase64(blob);
-
-            const result = await uploadPhotoFromLwc({
-                recordId: this.recordId,
-                fileName: name,
-                base64Data: base64,
-                contentType: blob.type || this.guessType(name)
-            });
-
-            // result => { versionId, fileType }
-            this.isPdf  = (result.fileType === "PDF");
-            this.fileUrl = "/sfc/servlet.shepherd/version/download/" + result.versionId;
-
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: "Success",
-                    message: "Photo uploaded.",
-                    variant: "success"
-                })
-            );
         } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: "Upload Error",
-                    message: (e && e.body && e.body.message) ? e.body.message : (e.message || "Unknown error"),
-                    variant: "error"
-                })
-            );
+            console.error("convert", e);
+            this.toast("Photo Uploader", "Unable to convert file. Please use JPG or PNG.", "error");
+            return;
+        }
+
+        // 2) block on converted size
+        if (this.hasSize(workFile) && workFile.size > maxBytes) {
+            this.toast("Photo Uploader", `Converted image exceeds ${this.maxFileSizeMb} MB.`, "error");
+            return;
+        }
+
+        try {
+            const base64 = await this.toBase64(workFile);
+            const resp = await uploadPhotoFromLwc({
+                recordId: this.recordId,
+                filename: workFile.name,
+                base64: base64
+            });
+            await setCurrentPhoto({ recordId: this.recordId, versionId: resp.versionId });
+            this.fileUrl =
+                "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + resp.versionId;
+            this.toast("Success", "Photo uploaded.", "success");
+        } catch (e) {
+            console.error("upload", e);
+            this.toast("Upload Error", e?.body?.message || e.message || "Upload failed.", "error");
         }
     }
 
-    readAsBase64(file) {
+    get maxBytes() {
+        const n = Number(this.maxFileSizeMb);
+        return (isNaN(n) || n <= 0 ? 12 : n) * 1024 * 1024;
+    }
+    hasSize(f){ return typeof f.size === "number" && isFinite(f.size); }
+
+    toBase64(file) {
         return new Promise((resolve, reject) => {
             const r = new FileReader();
-            r.onload = () => {
-                const s = r.result;
-                const i = s.indexOf("base64,");
-                resolve(i >= 0 ? s.substring(i + 7) : s);
-            };
+            r.onload = () => resolve(String(r.result).split(",")[1] || "");
             r.onerror = reject;
             r.readAsDataURL(file);
         });
     }
 
-    guessType(name) {
-        const n = name.toLowerCase();
-        if (n.endsWith(".png")) return "image/png";
-        if (n.endsWith(".jpg") || n.endsWith(".jpeg")) return "image/jpeg";
-        if (n.endsWith(".pdf")) return "application/pdf";
-        return "application/octet-stream";
+    async pdfFirstPageToJpeg(file) {
+        // Minimal approach; for fidelity consider pdf.js
+        const buf = await file.arrayBuffer();
+        const blobUrl = URL.createObjectURL(new Blob([buf], { type: "application/pdf" }));
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+
+        const loaded = new Promise((res, rej) => {
+            img.onload = () => res(true);
+            img.onerror = () => rej(new Error("Browser cannot render PDF as image."));
+        });
+        img.src = blobUrl;
+        await loaded;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width || 1200;
+        canvas.height = img.height || 800;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        URL.revokeObjectURL(blobUrl);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+        const bin = atob(dataUrl.split(",")[1]);
+        const u8 = new Uint8Array(bin.length);
+        for (let i=0;i<bin.length;i++) u8[i] = bin.charCodeAt(i);
+        return new File([u8], file.name.replace(/\.pdf$/i, ".jpg"), { type: "image/jpeg" });
+    }
+
+    async ensureHeic2Any() {
+        if (typeof window.heic2any === "function") return;
+        const ts = Date.now();
+        const src = `/resource/${ts}/heic2any/heic2any.min.js`;
+        await new Promise((resolve, reject) => {
+            const s = document.createElement("script");
+            s.src = src;
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+        });
+    }
+
+    toast(title, message, variant) {
+        this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
     }
 }
