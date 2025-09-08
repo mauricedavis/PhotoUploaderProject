@@ -1,165 +1,151 @@
-import { LightningElement, api, track } from "lwc";
-import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import getCurrentPhoto from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
-import uploadPhotoFromLwc from "@salesforce/apex/FileUploaderController.uploadPhotoFromLwc";
-import setCurrentPhoto from "@salesforce/apex/FileUploaderController.setCurrentPhoto";
+import { LightningElement, api, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import setCurrentPhotoByVersion from '@salesforce/apex/FileUploaderController.setCurrentPhotoByVersion';
 
 export default class FileUploader extends LightningElement {
-    @api recordId;
-    /** admin-configurable in App Builder; default 12 */
-    @api maxFileSizeMb = 12;
+    @api recordId;                       // Account Id
+    @api maxFileSizeMB = 12; // configurable (default 12MB)
+    @api multiple = false;
 
     @track fileUrl;
-    @track contentDocumentId;
 
-    get acceptString() {
-        return ".jpg,.jpeg,.png,.heic,.pdf";
-    }
+    // Accepted types we claim at the input level
+    acceptAttr = '.jpg,.jpeg,.png,.heic,.pdf,image/jpeg,image/png,image/heic,application/pdf';
 
     connectedCallback() {
-        this.loadCurrent();
+        // fetch current photo URL from existing Apex you've been using
+        this.refreshCurrentImage();
     }
 
-    loadCurrent() {
-        if (!this.recordId) return;
-        getCurrentPhoto({ recordId: this.recordId })
-            .then(cv => {
-                if (cv) {
-                    this.contentDocumentId = cv.ContentDocumentId;
-                    this.fileUrl =
-                        "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + cv.Id;
-                } else {
-                    this.contentDocumentId = null;
-                    this.fileUrl = null;
-                }
-            })
-            .catch(e => console.error("getCurrentPhoto", e));
+    async refreshCurrentImage() {
+        try {
+            // Minimal call you already have in your org:
+            // getCurrentPhoto returns latest ContentVersion (Id, ContentDocumentId)
+            // Re-use your earlier wire or imperative fetch
+            const resp = await fetch('/services/data/v62.0/query/?q='
+                + encodeURIComponent(SELECT Id, ContentDocumentId 
+                                       FROM ContentVersion 
+                                       WHERE Is_Currently_Displayed__c = TRUE 
+                                         AND ContentDocument.LatestPublishedVersionId = Id
+                                         AND ContentDocument.LatestPublishedVersion.IsDeleted = FALSE
+                                         AND ContentDocument.LatestPublishedVersion.Description = 'record photo'
+                                         AND ContentDocument.LatestPublishedVersion.ContentDocument.LatestPublishedVersionId = Id
+                                         AND ContentDocumentId IN (SELECT ContentDocumentId 
+                                                                   FROM ContentDocumentLink 
+                                                                   WHERE LinkedEntityId='')
+                                       ORDER BY LastModifiedDate DESC LIMIT 1));
+            const data = await resp.json();
+            if (data.records?.length) {
+                const vId = data.records[0].Id;
+                this.fileUrl = /sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=;
+            } else {
+                this.fileUrl = null;
+            }
+        } catch(e) {
+            // fail-soft
+            // eslint-disable-next-line no-console
+            console.error(e);
+        }
     }
 
+    // UI: open file picker
     openPicker() {
-        this.template.querySelector("input[type=file]").click();
+        this.template.querySelector('input[type="file"]').click();
     }
+
+    // Drag-n-drop
     handleDragOver(evt) {
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = "copy";
+        evt.dataTransfer.dropEffect = 'copy';
     }
     handleDrop(evt) {
         evt.preventDefault();
-        const f = evt.dataTransfer?.files?.[0];
-        if (f) this.processIncomingFile(f);
-    }
-    handleFilePicked(evt) {
-        const f = evt.target.files?.[0];
-        if (f) this.processIncomingFile(f);
-        evt.target.value = "";
-    }
-
-    async processIncomingFile(file) {
-        const maxBytes = this.maxBytes;
-        // 1) block on original size
-        if (this.hasSize(file) && file.size > maxBytes) {
-            this.toast("Photo Uploader", `Max file size is ${this.maxFileSizeMb} MB.`, "error");
-            return;
-        }
-
-        let workFile = file;
-        const nameLower = (file.name || "").toLowerCase();
-        const typeLower = (file.type || "").toLowerCase();
-        const isHeic = typeLower.includes("heic") || nameLower.endsWith(".heic");
-        const isPdf  = typeLower.includes("pdf")  || nameLower.endsWith(".pdf");
-
-        try {
-            if (isHeic) {
-                await this.ensureHeic2Any();
-                if (typeof window.heic2any !== "function") throw new Error("HEIC converter unavailable.");
-                const blob = await window.heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 });
-                workFile = new File([blob], file.name.replace(/\.heic$/i, ".jpg"), { type: "image/jpeg" });
-            } else if (isPdf) {
-                workFile = await this.pdfFirstPageToJpeg(file);
-            }
-        } catch (e) {
-            console.error("convert", e);
-            this.toast("Photo Uploader", "Unable to convert file. Please use JPG or PNG.", "error");
-            return;
-        }
-
-        // 2) block on converted size
-        if (this.hasSize(workFile) && workFile.size > maxBytes) {
-            this.toast("Photo Uploader", `Converted image exceeds ${this.maxFileSizeMb} MB.`, "error");
-            return;
-        }
-
-        try {
-            const base64 = await this.toBase64(workFile);
-            const resp = await uploadPhotoFromLwc({
-                recordId: this.recordId,
-                filename: workFile.name,
-                base64: base64
-            });
-            await setCurrentPhoto({ recordId: this.recordId, versionId: resp.versionId });
-            this.fileUrl =
-                "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + resp.versionId;
-            this.toast("Success", "Photo uploaded.", "success");
-        } catch (e) {
-            console.error("upload", e);
-            this.toast("Upload Error", e?.body?.message || e.message || "Upload failed.", "error");
+        const files = evt.dataTransfer?.files;
+        if (files && files.length) {
+            this.processFiles(files);
         }
     }
 
+    // Picker select
+    handleSelect(evt) {
+        const files = evt.target.files;
+        if (files && files.length) {
+            this.processFiles(files);
+            evt.target.value = ''; // reset input for same-name reselects
+        }
+    }
+
+    // ----- hard size check + upload -----
     get maxBytes() {
-        const n = Number(this.maxFileSizeMb);
-        return (isNaN(n) || n <= 0 ? 12 : n) * 1024 * 1024;
-    }
-    hasSize(f){ return typeof f.size === "number" && isFinite(f.size); }
-
-    toBase64(file) {
-        return new Promise((resolve, reject) => {
-            const r = new FileReader();
-            r.onload = () => resolve(String(r.result).split(",")[1] || "");
-            r.onerror = reject;
-            r.readAsDataURL(file);
-        });
+        return (parseInt(this.maxFileSizeMB, 10) || 12) * 1024 * 1024;
     }
 
-    async pdfFirstPageToJpeg(file) {
-        // Minimal approach; for fidelity consider pdf.js
-        const buf = await file.arrayBuffer();
-        const blobUrl = URL.createObjectURL(new Blob([buf], { type: "application/pdf" }));
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-
-        const loaded = new Promise((res, rej) => {
-            img.onload = () => res(true);
-            img.onerror = () => rej(new Error("Browser cannot render PDF as image."));
-        });
-        img.src = blobUrl;
-        await loaded;
-
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width || 1200;
-        canvas.height = img.height || 800;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        URL.revokeObjectURL(blobUrl);
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
-        const bin = atob(dataUrl.split(",")[1]);
-        const u8 = new Uint8Array(bin.length);
-        for (let i=0;i<bin.length;i++) u8[i] = bin.charCodeAt(i);
-        return new File([u8], file.name.replace(/\.pdf$/i, ".jpg"), { type: "image/jpeg" });
+    async processFiles(fileList) {
+        for (const file of Array.from(fileList)) {
+            if (file.size > this.maxBytes) {
+                this.toast('Photo Uploader', File is too large ( MB). Max is  MB., 'error');
+                continue;
+            }
+            try {
+                const prepared = await this.prepareFile(file);   // HEIC/PDF hooks
+                const versionId = await this.createVersion(prepared.blob, prepared.name, prepared.type);
+                await setCurrentPhotoByVersion({ recordId: this.recordId, versionId }); // server-side single-current enforcement
+                await this.refreshCurrentImage();
+                this.toast('Photo Uploader', 'Photo uploaded.', 'success');
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(e);
+                this.toast('Photo Uploader', (e?.body?.message || e?.message || 'Upload failed'), 'error');
+            }
+            if (!this.multiple) break;
+        }
     }
 
-    async ensureHeic2Any() {
-        if (typeof window.heic2any === "function") return;
-        const ts = Date.now();
-        const src = `/resource/${ts}/heic2any/heic2any.min.js`;
-        await new Promise((resolve, reject) => {
-            const s = document.createElement("script");
-            s.src = src;
-            s.onload = resolve;
-            s.onerror = reject;
-            document.head.appendChild(s);
+    // Optionally convert HEIC/PDF – stubs left in place (HEIC if static resource included)
+    async prepareFile(file) {
+        const lower = (file.name || '').toLowerCase();
+        if (lower.endsWith('.heic') || file.type === 'image/heic') {
+            // If you uploaded Static Resource "heic2any_min", we can try client conversion
+            if (window.heic2any) {
+                const blob = await window.heic2any({ blob: file, toType: 'image/jpeg' });
+                const name = lower.replace(/\.heic$/, '.jpg');
+                return { blob, name, type: 'image/jpeg' };
+            }
+            // else block HEIC if not convertible in this browser
+            throw new Error('HEIC not supported in this browser. Please use JPG/PNG.');
+        }
+        if (lower.endsWith('.pdf') || file.type === 'application/pdf') {
+            // For now, we don’t convert PDF to image here; block with a clear message.
+            // (You can later wire pdf.js to render first page to a canvas and upload as JPEG.)
+            throw new Error('PDF not supported for rendering. Please use JPG/PNG (or add pdf.js conversion).');
+        }
+        // JPG/PNG straight-through
+        return { blob: file, name: file.name, type: file.type || 'application/octet-stream' };
+    }
+
+    // Multipart to ContentVersion (no Apex heap limits)
+    async createVersion(blob, name, mime) {
+        const meta = {
+            Title: (name || 'upload').replace(/\.[^.]+$/, ''),
+            PathOnClient: name || 'upload',
+            FirstPublishLocationId: this.recordId,
+            Description: 'record photo',
+            Is_Currently_Displayed__c: true
+        };
+        const form = new FormData();
+        form.append('entity_content', new Blob([JSON.stringify(meta)], { type: 'application/json' }));
+        form.append('VersionData', blob, name);
+
+        const resp = await fetch('/services/data/v62.0/sobjects/ContentVersion', {
+            method: 'POST',
+            body: form
         });
+        if (!resp.ok) {
+            const txt = await resp.text();
+            throw new Error(txt);
+        }
+        const json = await resp.json();
+        return json.id; // ContentVersion Id
     }
 
     toast(title, message, variant) {

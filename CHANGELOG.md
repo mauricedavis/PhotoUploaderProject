@@ -32,3 +32,8 @@
 - Apex: reject >12 MB on server (ody.size()), still enforces single 'Is Currently Displayed'
 - Trigger (ContentVersion): for Description='record photo', block >12 MB on any path and ensure single-current on manual edits
 
+## 2025-09-08--1823PM
+- Added **FileUploadConfig__mdt** (Custom Metadata) with MaxFileSizeMB__c
+- DefaultConfig record deployed with 12MB
+- LWC + Apex enforce max file size (configurable)
+- Fixed PS script variable scoping for logs/branch

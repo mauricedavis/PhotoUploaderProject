@@ -1,27 +1,35 @@
 <template>
-    <lightning-card title="Photo Uploader" icon-name="utility:upload">
-        <div class="drop-zone" ondragover={handleDragOver} ondrop={handleDrop}>
-            <template if:true={fileUrl}>
-                <img class="preview" src={fileUrl} alt="Current image" />
-                <span class="hint">Drop a photo to replace</span>
-            </template>
-
-            <template if:false={fileUrl}>
-                <div class="empty">
-                    <p>Upload Photo</p>
-                    <div class="pick">
-                        <lightning-button label="Select File" onclick={openPicker}></lightning-button>
-                        <span class="or">Or drop files</span>
-                    </div>
-                </div>
-            </template>
-
-            <input
-                class="hidden-input"
-                type="file"
-                accept={acceptString}
-                onchange={handleFilePicked}
-            />
+  <article class="slds-card">
+    <div class="slds-card__header slds-grid slds-p-around_small">
+      <div class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__figure">
+          <lightning-icon icon-name="utility:upload" size="small"></lightning-icon>
         </div>
-    </lightning-card>
+        <div class="slds-media__body">
+          <h2 class="slds-card__header-title slds-truncate">Photo Uploader</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="slds-card__body slds-p-horizontal_small slds-p-bottom_small">
+      <template if:true={imageUrl}>
+        <div class="frame" ondragover={onDragOver} ondrop={onDrop}>
+          <img class="photo" src={imageUrl} alt="current" />
+          <span class="hint">Drop a photo to replace</span>
+        </div>
+      </template>
+
+      <template if:false={imageUrl}>
+        <div class="slds-m-top_small">
+          <lightning-file-upload
+            label="Upload Photo"
+            name="up"
+            accept=".jpg,.jpeg,.png,.heic,.pdf"
+            record-id={recordId}
+            onuploadfinished={onUploadFinished}>
+          </lightning-file-upload>
+        </div>
+      </template>
+    </div>
+  </article>
 </template>
