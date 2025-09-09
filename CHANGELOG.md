@@ -37,3 +37,15 @@
 - DefaultConfig record deployed with 12MB
 - LWC + Apex enforce max file size (configurable)
 - Fixed PS script variable scoping for logs/branch
+
+## 2025-09-08--1839PM
+- 12MB configurable limit enforced (client + server)
+
+
+### 2025-09-08--0746PM
+- 12MB configurable limit enforced (client + server)
+
+
+### 2025-09-09--0917AM
+- 12MB configurable limit enforced (client + server)
+

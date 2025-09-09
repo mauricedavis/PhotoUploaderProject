@@ -1,1 +1,2 @@
-(function(){ try{ if(!window.heic2any){ window.heic2any = function(opts){ return Promise.reject('heic2any stub: please upload real bundle'); }; } }catch(e){} })();
+﻿(()=>{window.HEIC2ANY_READY=!0;})();
+// Placeholder bundle. If you have a real minified heic2any.js, paste it here.

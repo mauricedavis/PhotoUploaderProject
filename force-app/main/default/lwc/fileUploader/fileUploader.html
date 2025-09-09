@@ -1,35 +1,16 @@
 <template>
-  <article class="slds-card">
-    <div class="slds-card__header slds-grid slds-p-around_small">
-      <div class="slds-media slds-media_center slds-has-flexi-truncate">
-        <div class="slds-media__figure">
-          <lightning-icon icon-name="utility:upload" size="small"></lightning-icon>
-        </div>
-        <div class="slds-media__body">
-          <h2 class="slds-card__header-title slds-truncate">Photo Uploader</h2>
+  <div class="uploader">
+    <lightning-card title="Photo Uploader">
+      <div class="slds-p-around_medium">
+        <lightning-input type="file"
+                         label="Upload Photo"
+                         accept=".jpg,.jpeg,.png,.heic,.pdf"
+                         onchange={onPick}>
+        </lightning-input>
+        <div class="slds-m-top_small slds-text-color_weak">
+          Max size: {maxMb} MB
         </div>
       </div>
-    </div>
-
-    <div class="slds-card__body slds-p-horizontal_small slds-p-bottom_small">
-      <template if:true={imageUrl}>
-        <div class="frame" ondragover={onDragOver} ondrop={onDrop}>
-          <img class="photo" src={imageUrl} alt="current" />
-          <span class="hint">Drop a photo to replace</span>
-        </div>
-      </template>
-
-      <template if:false={imageUrl}>
-        <div class="slds-m-top_small">
-          <lightning-file-upload
-            label="Upload Photo"
-            name="up"
-            accept=".jpg,.jpeg,.png,.heic,.pdf"
-            record-id={recordId}
-            onuploadfinished={onUploadFinished}>
-          </lightning-file-upload>
-        </div>
-      </template>
-    </div>
-  </article>
+    </lightning-card>
+  </div>
 </template>
