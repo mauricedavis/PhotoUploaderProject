@@ -1,10 +1,9 @@
-﻿.uploader { padding: .5rem .75rem; }
-.heading  { font-weight:600; margin-bottom:.5rem; }
-.drop {
-  position: relative; border:2px dashed #90a4ae; border-radius:.5rem;
-  min-height: 140px; display:flex; align-items:center; justify-content:center; gap:.75rem;
-}
-.picker { position:absolute; inset:0; opacity:0; cursor:pointer; }
-.btn { padding:.5rem .75rem; border:1px solid #90a4ae; border-radius:.35rem; background:#f8fafc; cursor:pointer; }
-.hint { color:#607d8b; font-size:.85rem; }
-.preview { display:block; width:100%; max-height:520px; object-fit:contain; margin-top:.75rem; border-radius:.5rem; }
+.frame { border:1px solid #d8dde6; border-radius:6px; padding:12px; position:relative; background:#fff; }
+.header { font-weight:600; margin-bottom:8px; }
+.photo { width:100%; height:auto; border-radius:4px; display:block; }
+.hint { position:absolute; right:12px; bottom:12px; font-size:12px; background:#f3f3f3; padding:4px 6px; border-radius:4px; }
+.empty { color:#778; padding:24px 0; }
+.actions { margin-top:12px; display:flex; align-items:center; gap:8px; }
+.picker { display:none; }
+.btn { padding:6px 10px; border:1px solid #d8dde6; border-radius:4px; background:#fff; cursor:pointer; }
+.dropcopy { color:#666; font-size:12px; }

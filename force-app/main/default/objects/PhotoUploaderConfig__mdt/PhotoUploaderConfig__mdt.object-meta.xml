@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-  <label>Photo Uploader Config</label>
-  <pluralLabel>Photo Uploader Config</pluralLabel>
-  <nameField>
-    <label>Config Name</label>
-    <type>Text</type>
-  </nameField>
   <deploymentStatus>Deployed</deploymentStatus>
-  <sharingModel>ReadWrite</sharingModel>
+  <description>Photo Uploader configuration</description>
+  <enableFeeds>false</enableFeeds>
+  <label>Photo Uploader Config</label>
+  <pluralLabel>Photo Uploader Configs</pluralLabel>
   <visibility>Public</visibility>
 </CustomObject>
