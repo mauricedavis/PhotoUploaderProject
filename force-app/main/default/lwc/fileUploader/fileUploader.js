@@ -1,89 +1,82 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import getCurrentPhoto from "@salesforce/apex/FileUploaderController.getCurrentPhoto";
-import uploadPhotoFromLwc from "@salesforce/apex/FileUploaderController.uploadPhotoFromLwc";
-import getMaxLimitBytes from "@salesforce/apex/FileUploaderController.getMaxLimitBytes";
+import getMaxUploadSizeMb from "@salesforce/apex/FileUploaderController.getMaxUploadSizeMb";
+import validateAndApply   from "@salesforce/apex/FileUploaderController.validateAndApply";
 
 export default class FileUploader extends LightningElement {
     @api recordId;
     @track fileUrl;
-    @track hasImage = false;
-    maxBytes = 12 * 1024 * 1024; // default while we fetch CMDT
 
-    get acceptAttr() {
-        // keep common image types; HEIC/PDF can be supported by server if enabled elsewhere
-        return ".jpg,.jpeg,.png,.heic,.pdf";
-    }
+    maxMb = 12;
+    maxBytes = 12 * 1024 * 1024;
+    acceptedFormats = [".jpg", ".jpeg", ".png", ".heic"]; // add more if required
 
     connectedCallback() {
-        this.refreshImage();
-        getMaxLimitBytes()
-            .then(b => { if (b > 0) this.maxBytes = b; })
+        getMaxUploadSizeMb()
+            .then(mb => {
+                if (mb && mb > 0) {
+                    this.maxMb = mb;
+                    this.maxBytes = mb * 1024 * 1024;
+                }
+            })
             .catch(() => {});
     }
 
-    refreshImage() {
-        getCurrentPhoto({ recordId: this.recordId })
-            .then(cv => {
-                if (cv && cv.Id) {
-                    this.hasImage = true;
-                    this.fileUrl = "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + cv.Id;
-                } else {
-                    this.hasImage = false;
-                    this.fileUrl = null;
-                }
-            })
-            .catch(e => this.toast("Photo Uploader", e?.body?.message || "Error loading photo", "error"));
+    get limitText() {
+        return `Max file size: ${this.maxMb} MB`;
     }
 
-    clickPicker() {
-        this.template.querySelector(".picker").click();
-    }
-
+    // --- Drag & drop over preview ------------------------------------
     handleDragOver(evt) {
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = "copy";
     }
-
-    handleDrop(evt) {
+    async handleDrop(evt) {
         evt.preventDefault();
-        const f = evt.dataTransfer?.files?.[0];
-        if (f) this.preflightAndUpload(f);
+        const files = evt.dataTransfer?.files;
+        if (!files || files.length === 0) return;
+        await this.uploadViaBrowser(files[0]);
     }
 
-    handleFilePicked(evt) {
-        const f = evt.target.files?.[0];
-        if (f) this.preflightAndUpload(f);
-        evt.target.value = ""; // reset
+    // --- lightning-file-upload finished ------------------------------
+    async handleUploadFinished(event) {
+        const file = event.detail.files?.[0];
+        // DO NOT render yet; validate on the server first
+        if (!file?.contentVersionId) return;
+        await this.validateOnServer(file.contentVersionId);
     }
 
-    preflightAndUpload(file) {
-        // client-side size guard
+    // --- Manual upload (drag onto preview) ---------------------------
+    async uploadViaBrowser(file) {
+        // client-side pre-check
         if (file.size > this.maxBytes) {
-            this.toast("Photo Uploader",
-                `File is ${(file.size/1048576).toFixed(1)} MB. Limit is ${(this.maxBytes/1048576).toFixed(1)} MB.`,
-                "error");
+            this.toast("Photo Uploader", `This file is larger than ${this.maxMb} MB.`, "error");
             return;
         }
-        const reader = new FileReader();
-        reader.onload = () => {
-            const base64 = reader.result.split(",")[1];
-            uploadPhotoFromLwc({
-                recordId: this.recordId,
-                fileName: file.name,
-                base64Body: base64,
-                contentType: file.type,
-                fileSizeBytes: file.size
-            })
-            .then(() => {
-                this.toast("Photo Uploader", "Photo uploaded and set as current.", "success");
-                this.refreshImage(); // instant render
-            })
-            .catch(e => {
-                this.toast("Photo Uploader", e?.body?.message || "Upload failed", "error");
-            });
-        };
-        reader.readAsDataURL(file);
+        // Use the hidden lightning-file-upload input by clicking it
+        const lfu = this.template.querySelector("lightning-file-upload");
+        if (lfu) {
+            lfu.uploadFiles([file]); // modern API (Winter '25+); if not available, fallback to user click
+        } else {
+            this.toast("Photo Uploader", "Drop-to-upload not available in this browser.", "error");
+        }
+    }
+
+    // --- Call Apex to validate size & set current --------------------
+    async validateOnServer(versionId) {
+        try {
+            const res = await validateAndApply({ recordId: this.recordId, versionId });
+            if (!res || !res.ok) {
+                this.toast("Photo Uploader", res?.msg || `Upload rejected (>${this.maxMb} MB).`, "error");
+                return;
+            }
+            // Only now set the preview URL (so oversize never flashes on screen)
+            this.fileUrl =
+                "/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_JPG&versionId=" + res.versionId;
+
+            this.toast("Photo Uploader", "Photo uploaded and set as current.", "success");
+        } catch (e) {
+            this.toast("Photo Uploader", e?.body?.message || "Upload failed.", "error");
+        }
     }
 
     toast(title, message, variant) {

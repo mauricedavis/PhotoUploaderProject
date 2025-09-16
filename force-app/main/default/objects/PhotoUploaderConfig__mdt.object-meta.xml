@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Max_Size_MB__c</fullName>
+        <externalId>false</externalId>
+        <label>Max Size (MB)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+    </fields>
+    <label>Photo Uploader Config</label>
+    <pluralLabel>Photo Uploader Configs</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,20 +1,36 @@
 <template>
-    <div class="frame" ondragover={handleDragOver} ondrop={handleDrop}>
-        <div class="header">Photo Uploader</div>
-
-        <template if:true={hasImage}>
-            <img class="photo" src={fileUrl} alt="record photo"/>
-            <span class="hint">Drop a photo to replace</span>
-        </template>
-
-        <template if:false={hasImage}>
-            <div class="empty">Upload Photo</div>
-        </template>
-
-        <div class="actions">
-            <input class="picker" type="file" accept={acceptAttr} onchange={handleFilePicked}/>
-            <button class="btn" onclick={clickPicker}>Upload Files</button>
-            <span class="dropcopy">Or drop files</span>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid slds-p-around_small">
+            <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="utility:upload" size="small"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title slds-truncate">Photo Uploader</h2>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div class="slds-card__body slds-p-horizontal_small slds-p-bottom_small">
+            <template if:true={fileUrl}>
+                <div class="preview" ondragover={handleDragOver} ondrop={handleDrop}>
+                    <img class="photo" src={fileUrl} alt="Current photo"/>
+                    <div class="hint">Drop a photo to replace</div>
+                </div>
+            </template>
+
+            <div class="slds-m-top_small">
+                <div class="slds-text-title">Upload Photo</div>
+                <lightning-file-upload
+                    label="Upload Files"
+                    accept={acceptedFormats}
+                    record-id={recordId}
+                    onuploadfinished={handleUploadFinished}>
+                </lightning-file-upload>
+                <template if:true={limitText}>
+                    <p class="slds-text-color_weak slds-m-top_xx-small">{limitText}</p>
+                </template>
+            </div>
+        </div>
+    </article>
 </template>

@@ -51,3 +51,12 @@
 
 ### 2025-09-09--1141AM
 - 12MB configurable limit enforced (client + server)
+### 2025-09-09--1317PM
+- 12MB configurable limit enforced (client + server)
+- Oversize uploads are immediately deleted and never displayed
+### 2025-09-16--0127PM
+- 12MB configurable limit enforced (client + server)
+- Oversize uploads are immediately deleted and never displayed
+### 2025-09-16 14:10
+- 12MB configurable limit enforced (client + server)
+- Oversize uploads are blocked before display and rejected on server

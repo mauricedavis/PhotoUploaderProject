@@ -1,102 +1,115 @@
 public with sharing class FileUploaderController {
 
-    @AuraEnabled(cacheable=true)
-    public static ContentVersion getCurrentPhoto(Id recordId) {
-        if (recordId == null) return null;
+    private static Integer defaultMb = 12;
 
-        Set<Id> docIds = new Set<Id>();
-        for (ContentDocumentLink cdl : [
-            SELECT ContentDocumentId
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :recordId
-        ]) docIds.add(cdl.ContentDocumentId);
-
-        if (docIds.isEmpty()) return null;
-
-        List<ContentVersion> flagged = [
-            SELECT Id, ContentDocumentId
-            FROM ContentVersion
-            WHERE ContentDocumentId IN :docIds
-              AND Description = 'record photo'
-              AND Is_Currently_Displayed__c = TRUE
-            ORDER BY LastModifiedDate DESC
-            LIMIT 1
-        ];
-        if (!flagged.isEmpty()) return flagged[0];
-
-        List<ContentVersion> fallback = [
-            SELECT Id, ContentDocumentId
-            FROM ContentVersion
-            WHERE ContentDocumentId IN :docIds
-              AND Description = 'record photo'
-            ORDER BY LastModifiedDate DESC
-            LIMIT 1
-        ];
-        return fallback.isEmpty() ? null : fallback[0];
-    }
-
-    @AuraEnabled
-    public static Integer getMaxLimitBytes() {
-        PhotoUploaderConfig__mdt cfg = [
-            SELECT Max_File_Size_MB__c
-            FROM PhotoUploaderConfig__mdt
-            WHERE DeveloperName = 'DefaultConfig'
-            LIMIT 1
-        ];
-        Integer mb = (cfg == null || cfg.Max_File_Size_MB__c == null) ? 12 : Integer.valueOf(cfg.Max_File_Size_MB__c);
-        return mb * 1024 * 1024;
-    }
-
-    @AuraEnabled
-    public static void uploadPhotoFromLwc(Id recordId, String fileName, String base64Body, String contentType, Integer fileSizeBytes) {
-        if (recordId == null || String.isBlank(fileName) || String.isBlank(base64Body)) {
-            throw new AuraHandledException('Missing required parameters.');
-        }
-
-        Integer maxBytes = getMaxLimitBytes();
-        if (fileSizeBytes != null && fileSizeBytes > maxBytes) {
-            Decimal limitMb = Decimal.valueOf(maxBytes) / (1024*1024);
-            Decimal actualMb = Decimal.valueOf(fileSizeBytes) / (1024*1024);
-            throw new AuraHandledException('File is ' + actualMb.setScale(1) + ' MB. Limit is ' + limitMb.setScale(1) + ' MB.');
-        }
-
-        // clear previous "current" flags on this record's "record photo" versions
-        Set<Id> docIds = new Set<Id>();
-        for (ContentDocumentLink cdl : [
-            SELECT ContentDocumentId
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :recordId
-        ]) docIds.add(cdl.ContentDocumentId);
-
-        if (!docIds.isEmpty()) {
-            List<ContentVersion> toUnset = [
-                SELECT Id, Is_Currently_Displayed__c
-                FROM ContentVersion
-                WHERE ContentDocumentId IN :docIds
-                  AND Description = 'record photo'
-                  AND Is_Currently_Displayed__c = TRUE
+    private static Integer maxMb() {
+        try {
+            PhotoUploaderConfig__mdt cfg = [
+                SELECT Max_Size_MB__c
+                FROM PhotoUploaderConfig__mdt
+                WHERE DeveloperName = 'DefaultConfig'
+                LIMIT 1
             ];
-            for (ContentVersion cv : toUnset) cv.Is_Currently_Displayed__c = false;
-            if (!toUnset.isEmpty()) update toUnset;
+            Integer n = (cfg.Max_Size_MB__c == null) ? defaultMb : Integer.valueOf(cfg.Max_Size_MB__c);
+            return (n > 0) ? n : defaultMb;
+        } catch (Exception e) {
+            return defaultMb;
+        }
+    }
+    private static Long maxBytes() {
+        return (Long)maxMb() * 1024L * 1024L;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Integer getMaxUploadSizeMb() {
+        return maxMb();
+    }
+
+    /**
+     * Validate the uploaded version and, if OK, set it as the single "current".
+     * If oversize: immediately delete the uploaded doc + versions and return ok=false.
+     */
+    @AuraEnabled
+    public static Map<String,Object> validateAndApply(Id recordId, Id versionId) {
+        Map<String,Object> res = new Map<String,Object>();
+        if (recordId == null || versionId == null) {
+            res.put('ok', false);
+            res.put('msg', 'Missing record or file.');
+            return res;
         }
 
-        // create new ContentVersion, mark as current
-        ContentVersion cv = new ContentVersion();
-        cv.Title            = fileName;
-        cv.PathOnClient     = fileName;
-        cv.VersionData      = EncodingUtil.base64Decode(base64Body);
-        cv.IsMajorVersion   = true;
-        cv.Description      = 'record photo';
-        cv.Is_Currently_Displayed__c = true;
-        insert cv;
+        ContentVersion cv = [
+            SELECT Id, ContentDocumentId, ContentSize, FileType, Description, Is_Currently_Displayed__c
+            FROM ContentVersion
+            WHERE Id = :versionId
+            LIMIT 1
+        ];
 
-        // link to the record
-        Id docId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId;
-        ContentDocumentLink link = new ContentDocumentLink(
-            ContentDocumentId = docId,
-            LinkedEntityId    = recordId,
-            ShareType         = 'V'
-        );
-        insert link;
+        if (cv.ContentSize > maxBytes()) {
+            // Remove links and the uploaded doc entirely
+            List<ContentDocumentLink> links = [
+                SELECT Id FROM ContentDocumentLink
+                WHERE ContentDocumentId = :cv.ContentDocumentId
+            ];
+            if (!links.isEmpty()) delete links;
+            // Delete all versions then document
+            List<ContentVersion> vers = [
+                SELECT Id FROM ContentVersion
+                WHERE ContentDocumentId = :cv.ContentDocumentId
+            ];
+            if (!vers.isEmpty()) delete vers;
+            delete new ContentDocument(Id=cv.ContentDocumentId);
+
+            res.put('ok', false);
+            res.put('msg', 'File exceeds the configured limit of ' + maxMb() + ' MB. Upload discarded.');
+            return res;
+        }
+
+        // Ensure a link to the target record exists
+        List<ContentDocumentLink> existing = [
+            SELECT Id FROM ContentDocumentLink
+            WHERE ContentDocumentId = :cv.ContentDocumentId AND LinkedEntityId = :recordId
+            LIMIT 1
+        ];
+        if (existing.isEmpty()) {
+            insert new ContentDocumentLink(
+                ContentDocumentId = cv.ContentDocumentId,
+                LinkedEntityId    = recordId,
+                ShareType         = 'V',
+                Visibility        = 'AllUsers',
+                LinkType          = 'V'
+            );
+        }
+
+        // Turn off any other "current" flags for photos on this record
+        Set<Id> docIds = new Set<Id>();
+        for (ContentDocumentLink cdl : [
+            SELECT ContentDocumentId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId = :recordId
+        ]) docIds.add(cdl.ContentDocumentId);
+        if (!docIds.contains(cv.ContentDocumentId)) docIds.add(cv.ContentDocumentId);
+
+        List<ContentVersion> toUpd = new List<ContentVersion>();
+        for (ContentVersion other : [
+            SELECT Id, Is_Currently_Displayed__c
+            FROM ContentVersion
+            WHERE ContentDocumentId IN :docIds
+            AND   Description = 'record photo'
+            AND   Is_Currently_Displayed__c = true
+        ]) {
+            other.Is_Currently_Displayed__c = false;
+            toUpd.add(other);
+        }
+
+        cv.Is_Currently_Displayed__c = true;
+        if (cv.Description != 'record photo') cv.Description = 'record photo';
+        toUpd.add(cv);
+        update toUpd;
+
+        res.put('ok', true);
+        res.put('versionId', cv.Id);
+        res.put('docId', cv.ContentDocumentId);
+        return res;
     }
 }
