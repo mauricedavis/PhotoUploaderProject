@@ -65,3 +65,9 @@
 ## 2025-09-17--1353PM
 - 12MB configurable limit enforced (client + server)
 - Oversize uploads are blocked client-side and rejected server-side
+### 2025-09-17--1453
+- 12MB configurable limit enforced (client + server)
+- Oversize uploads are blocked client-side and server-side
+## 2025-09-17--1542
+- 12MB configurable limit enforced (client + server)
+- Oversize uploads are blocked before display
